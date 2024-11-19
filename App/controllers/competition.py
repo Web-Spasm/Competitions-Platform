@@ -1,5 +1,5 @@
 from App.database import db
-from App.models import Competition, Moderator, CompetitionTeam, Team, Student#, Student, Admin, competition_student
+from App.models import Competition, Moderator, CompetitionTeam, StudentTeam, Student#, Student, Admin, competition_student
 from datetime import datetime
 
 def create_competition(mod_name, comp_name, date, location, level, max_score):
@@ -47,7 +47,7 @@ def display_competition_results(name):
     if not comp:
         print(f'{name} was not found!')
         return None
-    elif len(comp.teams) == 0:
+    elif len(comp.competition_teams) == 0:
         print(f'No teams found for {name}!')
         return []
     else:
@@ -58,14 +58,14 @@ def display_competition_results(name):
         count = 1
         curr_high = comp_teams[0].points_earned
         curr_rank = 1
-        
+
         for comp_team in comp_teams:
             if curr_high != comp_team.points_earned:
                 curr_rank = count
                 curr_high = comp_team.points_earned
 
-            team = Team.query.filter_by(id=comp_team.team_id).first()
-            leaderboard.append({"placement": curr_rank, "team": team.name, "members" : [student.username for student in team.students], "score":comp_team.points_earned})
+            student_team = StudentTeam.query.filter_by(id=comp_team.student_team_id).first()
+            leaderboard.append({"placement": curr_rank, "team": student_team.team_name, "members": [student.username for student in student_team.students], "score": comp_team.points_earned})
             count += 1
-        
+
         return leaderboard

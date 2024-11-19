@@ -57,8 +57,8 @@ def initialize():
 
         for result in reader:
             students = [result['student1'], result['student2'], result['student3']]
-            team = add_team(result['mod_name'], result['comp_name'], result['team_name'], students)
-            add_results(result['mod_name'], result['comp_name'], result['team_name'], int(result['score']))
+            team = add_student_team(result['mod_name'], result['comp_name'], result['team_name'], students)
+            add_results(result['mod_name'], result['comp_name'], result['team_name'], students, int(result['score']))
             #db.session.add(comp)
         #db.session.commit()
     
@@ -207,7 +207,7 @@ def add_team_to_comp_command(mod_name, comp_name, team_name, student1, student2,
 @click.argument("score", default=10)
 def add_results_command(mod_name, comp_name, team_name, student1, student2, student3, score):
     students = [student1, student2, student3]
-    comp = add_team(mod_name, comp_name, team_name, students)
+    comp = add_student_team(mod_name, comp_name, team_name, students)
 
     if comp:
         comp_team = add_results(mod_name, comp_name, team_name, score)

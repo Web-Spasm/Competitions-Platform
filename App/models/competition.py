@@ -14,7 +14,7 @@ class Competition(db.Model):
     max_score = db.Column(db.Integer, default=25)
     confirm = db.Column(db.Boolean, default=False)
     moderators = db.relationship('Moderator', secondary="competition_moderator", overlaps='competitions', lazy=True)
-    teams = db.relationship('Team', secondary="competition_team", overlaps='competitions', lazy=True)
+    competition_teams = db.relationship('CompetitionTeam', backref='competition', lazy=True)
 
     def __init__(self, name, date, location, level, max_score):
         self.name = name
@@ -23,7 +23,7 @@ class Competition(db.Model):
         self.level = level
         self.max_score = max_score
         self.moderators = []
-        self.teams = []
+        self.competition_teams = []
     
     def add_mod(self, mod):
         for m in self.moderators:
@@ -43,18 +43,17 @@ class Competition(db.Model):
             print("Something went wrong!")
             return None
 
-    def add_team(self, team):
-        for t in self.teams:
-            if t.id == team.id:
+    def add_student_team(self, student_team):
+        for ct in self.competition_teams:
+            if ct.student_team_id == student_team.id:
                 print(f'Team already registered for {self.name}!')
                 return None
         
-        comp_team = CompetitionTeam(comp_id=self.id, team_id=team.id)
+        comp_team = CompetitionTeam(comp_id=self.id, student_team_id=student_team.id)
         try:
-            self.teams.append(team)
-            team.competitions.append(self)
+            self.competition_teams.append(comp_team)
             db.session.commit()
-            print(f'{team.name} was added to {self.name}!')
+            print(f'{student_team.team_name} was added to {self.name}!')
             return comp_team
         except Exception as e:
             db.session.rollback()
@@ -70,7 +69,7 @@ class Competition(db.Model):
             "level" : self.level,
             "max_score" : self.max_score,
             "moderators": [mod.username for mod in self.moderators],
-            "teams": [team.name for team in self.teams]
+            "teams": [ct.student_team.team_name for ct in self.competition_teams]
         }
 
     def toDict(self):
@@ -82,7 +81,7 @@ class Competition(db.Model):
             "Level" : self.level,
             "Max Score" : self.max_score,
             "Moderators": [mod.username for mod in self.moderators],
-            "Teams": [team.name for team in self.teams]
+            "Teams": [ct.student_team.team_name for ct in self.competition_teams]
         }
 
     def __repr__(self):
