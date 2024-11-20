@@ -111,8 +111,8 @@ def update_rankings():
             else:
                 message = f'RANK : {student.curr_rank}. Oh no! Your rank has went down.'
             student.prev_rank = student.curr_rank
-            notification = Notification(student.id, message)
-            student.notifications.append(notification)
+            # notification = Notification(student.id, message)
+            # student.notifications.append(notification)
 
             try:
                 db.session.add(student)
