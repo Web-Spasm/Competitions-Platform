@@ -34,6 +34,18 @@ def get_all_moderators_json():
     mods_json = [mod.get_json() for mod in mods]
     return mods_json
 
+
+def update_rank(self):
+    print(f'Updating {self.username}')
+    try:
+        db.session.add(self)
+        db.session.commit()
+        return self
+    except Exception as e:
+        db.session.rollback()
+        return None
+    return None
+
 def update_moderator(id, username):
     mod = get_moderator(id)
     if mod:
@@ -107,40 +119,40 @@ def add_results(mod_name, comp_name, team_name, score):
     return None
 
 
-def update_ratings(mod_name, comp_name):
-    mod = Moderator.query.filter_by(username=mod_name).first()
-    comp = Competition.query.filter_by(name=comp_name).first()
+# def update_ratings(mod_name, comp_name):
+#     mod = Moderator.query.filter_by(username=mod_name).first()
+#     comp = Competition.query.filter_by(name=comp_name).first()
 
-    if not mod:
-        print(f'{mod_name} was not found!')
-        return None
-    elif not comp:
-        print(f'{comp_name} was not found!')
-        return None
-    elif comp.confirm:
-        print(f'Results for {comp_name} has already been finalized!')
-        return None
-    elif mod not in comp.moderators:
-        print(f'{mod_name} is not authorized to add results for {comp_name}!')
-        return None
-    elif len(comp.teams) == 0:
-        print(f'No teams found. Results can not be confirmed!')
-        return None
-    else:
-        comp_teams = CompetitionTeam.query.filter_by(comp_id=comp.id).all()
+#     if not mod:
+#         print(f'{mod_name} was not found!')
+#         return None
+#     elif not comp:
+#         print(f'{comp_name} was not found!')
+#         return None
+#     elif comp.confirm:
+#         print(f'Results for {comp_name} has already been finalized!')
+#         return None
+#     elif mod not in comp.moderators:
+#         print(f'{mod_name} is not authorized to add results for {comp_name}!')
+#         return None
+#     elif len(comp.teams) == 0:
+#         print(f'No teams found. Results can not be confirmed!')
+#         return None
+#     else:
+#         comp_teams = CompetitionTeam.query.filter_by(comp_id=comp.id).all()
 
-        for comp_team in comp_teams:
-            team = Team.query.filter_by(id=comp_team.team_id).first()
+#         for comp_team in comp_teams:
+#             team = Team.query.filter_by(id=comp_team.team_id).first()
 
-            for stud in team.students:
-                stud.rating_score = (stud.rating_score*stud.comp_count + comp_team.rating_score)/(stud.comp_count+1)
-                stud.comp_count += 1
-                try:
-                    db.session.add(stud)
-                    db.session.commit()
-                except Exception as e:
-                    db.session.rollback()
+#             for stud in team.students:
+#                 stud.rating_score = (stud.rating_score*stud.comp_count + comp_team.rating_score)/(stud.comp_count+1)
+#                 stud.comp_count += 1
+#                 try:
+#                     db.session.add(stud)
+#                     db.session.commit()
+#                 except Exception as e:
+#                     db.session.rollback()
 
-        comp.confirm = True
-        print("Results finalized!")
-        return True
+#         comp.confirm = True
+#         print("Results finalized!")
+#         return True

@@ -50,6 +50,18 @@ def update_student(id, username):
     print("ID: {id} does not exist!")
     return None
 
+
+def update_rank(self):
+    print(f'Updating {self.username}')
+    try:
+        db.session.add(self)
+        db.session.commit()
+        return self
+    except Exception as e:
+        db.session.rollback()
+        return None
+    return None
+
 def display_student_info(username):
     student = get_student_by_username(username)
 
@@ -72,78 +84,78 @@ def display_student_info(username):
 
         return profile_info
 
-def display_notifications(username):
-    student = get_student_by_username(username)
+# def display_notifications(username):
+#     student = get_student_by_username(username)
 
-    if not student:
-        print(f'{username} does not exist!')
-        return None
-    else:
-        return {"notifications":[notification.to_Dict() for notification in student.notifications]}
+#     if not student:
+#         print(f'{username} does not exist!')
+#         return None
+#     else:
+#         return {"notifications":[notification.to_Dict() for notification in student.notifications]}
 
-def update_rankings():
-    students = get_all_students()
+# def update_rankings():
+#     students = get_all_students()
     
-    students.sort(key=lambda x: (x.rating_score, x.comp_count), reverse=True)
+#     students.sort(key=lambda x: (x.rating_score, x.comp_count), reverse=True)
 
-    leaderboard = []
-    count = 1
+#     leaderboard = []
+#     count = 1
     
-    curr_high = students[0].rating_score
-    curr_rank = 1
+#     curr_high = students[0].rating_score
+#     curr_rank = 1
         
-    for student in students:
-        if curr_high != student.rating_score:
-            curr_rank = count
-            curr_high = student.rating_score
+#     for student in students:
+#         if curr_high != student.rating_score:
+#             curr_rank = count
+#             curr_high = student.rating_score
 
-        if student.comp_count != 0:
-            leaderboard.append({"placement": curr_rank, "student": student.username, "rating score":student.rating_score})
-            count += 1
+#         if student.comp_count != 0:
+#             leaderboard.append({"placement": curr_rank, "student": student.username, "rating score":student.rating_score})
+#             count += 1
         
-            student.curr_rank = curr_rank
-            if student.prev_rank == 0:
-                message = f'RANK : {student.curr_rank}. Congratulations on your first rank!'
-            elif student.curr_rank == student.prev_rank:
-                message = f'RANK : {student.curr_rank}. Well done! You retained your rank.'
-            elif student.curr_rank < student.prev_rank:
-                message = f'RANK : {student.curr_rank}. Congratulations! Your rank has went up.'
-            else:
-                message = f'RANK : {student.curr_rank}. Oh no! Your rank has went down.'
-            student.prev_rank = student.curr_rank
-            # notification = Notification(student.id, message)
-            # student.notifications.append(notification)
+#             student.curr_rank = curr_rank
+#             if student.prev_rank == 0:
+#                 message = f'RANK : {student.curr_rank}. Congratulations on your first rank!'
+#             elif student.curr_rank == student.prev_rank:
+#                 message = f'RANK : {student.curr_rank}. Well done! You retained your rank.'
+#             elif student.curr_rank < student.prev_rank:
+#                 message = f'RANK : {student.curr_rank}. Congratulations! Your rank has went up.'
+#             else:
+#                 message = f'RANK : {student.curr_rank}. Oh no! Your rank has went down.'
+#             student.prev_rank = student.curr_rank
+#             # notification = Notification(student.id, message)
+#             # student.notifications.append(notification)
 
-            try:
-                db.session.add(student)
-                db.session.commit()
-            except Exception as e:
-                db.session.rollback()
+#             try:
+#                 db.session.add(student)
+#                 db.session.commit()
+#             except Exception as e:
+#                 db.session.rollback()
 
-    return leaderboard
+#     return leaderboard
 
-def display_rankings():
-    students = get_all_students()
+# def display_rankings():
+#     students = get_all_students()
 
-    students.sort(key=lambda x: (x.rating_score, x.comp_count), reverse=True)
+#     students.sort(key=lambda x: (x.rating_score, x.comp_count), reverse=True)
 
-    leaderboard = []
-    count = 1
-    curr_high = students[0].rating_score
-    curr_rank = 1
+#     leaderboard = []
+#     count = 1
+#     curr_high = students[0].rating_score
+#     curr_rank = 1
         
-    for student in students:
-        if curr_high != student.rating_score:
-            curr_rank = count
-            curr_high = student.rating_score
+#     for student in students:
+#         if curr_high != student.rating_score:
+#             curr_rank = count
+#             curr_high = student.rating_score
 
-        if student.comp_count != 0:
-            leaderboard.append({"placement": curr_rank, "student": student.username, "rating score":student.rating_score})
-            count += 1
+#         if student.comp_count != 0:
+#             leaderboard.append({"placement": curr_rank, "student": student.username, "rating score":student.rating_score})
+#             count += 1
 
-    print("Rank\tStudent\tRating Score")
+#     print("Rank\tStudent\tRating Score")
 
-    for position in leaderboard:
-        print(f'{position["placement"]}\t{position["student"]}\t{position["rating score"]}')
+#     for position in leaderboard:
+#         print(f'{position["placement"]}\t{position["student"]}\t{position["rating score"]}')
     
-    return leaderboard
+#     return leaderboard

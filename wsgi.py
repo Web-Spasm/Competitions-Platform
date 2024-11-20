@@ -27,8 +27,8 @@ def initialize():
 
         for student in reader:
             stud = create_student(student['username'], student['password'])
-            #db.session.add(stud)
-        #db.session.commit()
+        #     db.session.add(stud)
+        # db.session.commit()
     
     student_file.close()
 
@@ -67,10 +67,10 @@ def initialize():
     with open("competitions.csv") as competitions_file:
         reader = csv.DictReader(competitions_file)
 
-        for competition in reader:
-            if competition['comp_name'] != 'TopCoder':
-                update_ratings(competition['mod_name'], competition['comp_name'])
-                update_rankings()
+        # for competition in reader:
+        #     if competition['comp_name'] != 'TopCoder':
+                # update_ratings(competition['mod_name'], competition['comp_name'])
+                # update_rankings()
             #db.session.add(comp)
         #db.session.commit()
     
@@ -157,10 +157,10 @@ def list_students_command(format):
 def display_student_info_command(username):
     print(display_student_info(username))
 
-@student_cli.command("notifications", help="Gets all notifications")
-@click.argument("username", default="stud1")
-def display_notifications_command(username):
-    print(display_notifications(username))
+# @student_cli.command("notifications", help="Gets all notifications")
+# @click.argument("username", default="stud1")
+# def display_notifications_command(username):
+#     print(display_notifications(username))
 
 app.cli.add_command(student_cli)
 
@@ -212,12 +212,12 @@ def add_results_command(mod_name, comp_name, team_name, student1, student2, stud
     if comp:
         comp_team = add_results(mod_name, comp_name, team_name, score)
 
-@mod_cli.command("confirm", help="Confirms results for all teams in a competition")
-@click.argument("mod_name", default="mod1")
-@click.argument("comp_name", default="comp1")
-def update_rankings_command(mod_name, comp_name):
-    update_ratings(mod_name, comp_name)
-    update_rankings()
+# @mod_cli.command("confirm", help="Confirms results for all teams in a competition")
+# @click.argument("mod_name", default="mod1")
+# @click.argument("comp_name", default="comp1")
+# def update_rankings_command(mod_name, comp_name):
+#     update_ratings(mod_name, comp_name)
+#     update_rankings()
 
 @mod_cli.command("rankings", help="Displays overall rankings")
 def display_rankings_command():
