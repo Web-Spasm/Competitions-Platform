@@ -10,7 +10,10 @@ class RankingHistory(db.Model):
     date = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __init__(self, student_id, date):
+    def __init__(self, student_id, date):
         self.student_id = student_id
+        self.date = date
+      
         self.date = date
       
 
