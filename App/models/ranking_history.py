@@ -8,6 +8,7 @@ class RankingHistory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
 <<<<<<< HEAD
+<<<<<<< HEAD
     date = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __init__(self, student_id, date):
@@ -31,13 +32,31 @@ class RankingHistory(db.Model):
 =======
     rank_id = db.Column(db.Integer, db.ForeignKey('rank.id'), nullable=False)
     rank = db.Column(db.Integer, nullable=False)
+=======
+>>>>>>> b134881 (removed rank and ranking id from RankingHistory added it to Ranking)
     date = db.Column(db.DateTime, default=datetime.utcnow)
 
-    def __init__(self, student_id,rank_id, rank):
+    def __init__(self, student_id, date):
         self.student_id = student_id
-        self.rank_id = rank_id
-        self.rank = rank
+        self.date = date
+      
 
+<<<<<<< HEAD
     def __repr__(self):
         return f'<RankingHistory {self.id} : {self.rank}>'
 >>>>>>> 8057185 (Setup Rank and Ranking classes)
+=======
+    def get_json(self):
+        return {
+            "id" : self.id,
+            "student_id" : self.student_id,
+            "date" : self.date
+        }
+    
+    def to_Dict(self):
+      return {
+            "ID" : self.id,
+            "Student ID" : self.student_id,
+            "Date" : self.date
+      }
+>>>>>>> b134881 (removed rank and ranking id from RankingHistory added it to Ranking)
