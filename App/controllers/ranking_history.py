@@ -19,6 +19,7 @@ def create_ranking_history(student_id, date):
         return None
 
 def get_ranking_history_by_id(student_id):
+<<<<<<< HEAD
     ranking_history = RankingHistory.query.filter_by(student_id=student_id).first()
     if not ranking_history:
         print(f'Ranking History for student with ID: {student_id} not found!')
@@ -29,6 +30,13 @@ def get_ranking_history_by_id_json(student_id):
     ranking_history = RankingHistory.query.get(student_id).first()
     if not ranking_history:
         print(f'Ranking History for student with ID: {student_id} not found!')
+=======
+    return RankingHistory.query.get(student_id)
+
+def get_ranking_history_by_id_json(student_id):
+    ranking_history = RankingHistory.query.get(student_id)
+    if not ranking_history:
+>>>>>>> 27d47c7 (Added controllers for Ranking History and Ranking, also modified the Moderators's add_results function)
         return None
     return ranking_history.get_json()
 
@@ -45,4 +53,8 @@ def update_ranking_history(student_id, date):
     except Exception as e:
         db.session.rollback()
         print("Ranking History update failed!")
+<<<<<<< HEAD
         return None
+=======
+        return None
+>>>>>>> 27d47c7 (Added controllers for Ranking History and Ranking, also modified the Moderators's add_results function)
