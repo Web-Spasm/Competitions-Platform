@@ -82,6 +82,18 @@ h1 {
     /*background-image: linear-gradient(#61677A, #000000);*/
 }
 
+.date-form {
+    border-radius: 25px;
+    width: 25%;
+    outline-style: solid;
+    margin: auto;
+    text-align: center;
+    font-size: 2vw;
+    color: white;
+    background-color: black;
+    padding: 2vw;
+}
+
 .rating-score {
     border-radius: 25px;
     width: 25%;
@@ -212,6 +224,12 @@ h1 {
         font-size: 5vw;
     }
 
+    .date-form {
+        width: 40%;
+        font-size: 5vw;
+        padding: 5vw;
+    }
+
     .rating-score {
         width: 40%;
         font-size: 5vw;
@@ -277,6 +295,14 @@ h1 {
                 <p>{{student.curr_rank}}</p>
                 {% endif %}
             </div>
+            <!--- Date Form -->
+            <div class="date-form">
+                <form id="dateForm">
+                    <label for="date">Enter Date (MM/YYYY):</label>
+                    <input type="text" id="date" name="date" placeholder="MM/YYYY">
+                    <button type="submit">View History</button>
+                </form>
+            </div>
             <div class="rating-score">
                 <p>Rating Score</p>
                 <p>{{'%0.2f' % student.rating_score|float}}</p>
@@ -299,7 +325,23 @@ h1 {
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('dateForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the form from actually submitting
     
+        var dateValue = document.getElementById('date').value;
+    
+        // Validation for MM/YYYY format using regex
+        var datePattern = /^(0[1-9]|1[0-2])\/\d{4}$/;
+        if (datePattern.test(dateValue)) {
+            alert("Date entered: " + dateValue);
+        } else {
+            alert("Invalid date format. Please use MM/YYYY.");
+        }
+    });
+</script>
+
     <!---
     <div class="notifications">
         <h5>Notifications:</h5>
