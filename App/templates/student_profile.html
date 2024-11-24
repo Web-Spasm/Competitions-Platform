@@ -83,22 +83,34 @@ h1 {
 }
 
 .date-form {
-    border-radius: 25px;
-    width: 25%;
+    border-radius: 20px; /* Keep rounded corners */
+    width: 25%; /* Keep the original width */
     outline-style: solid;
     margin: auto;
     text-align: center;
-    font-size: 2vw;
+    font-size: 1.6vw; /* Keep font size proportional */
     color: white;
     background-color: black;
-    padding: 2vw;
+    padding: 1vw 2vw; /* Reduce vertical padding to make the height shorter */
+}
+
+.date-form input[type="text"] {
+    font-size: 1.2vw; /* Proportional size for input text */
+    padding: 0.4vw; /* Shorten input height */
+    line-height: 1; /* Maintain compact spacing */
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #000000;
+    width: 80%; /* Keep width of the input field consistent */
+    margin-top: -0.5vw;
 }
 
 .date-form button {
-    font-size: 1.2vw; /* Smaller font size */
-    padding: 0.8vw 1.5vw; /* Smaller button padding */
-    border-radius: 10px; /* Rounded button corners */
-    background-color: #007bff; /* Blue button color */
+    font-size: 1vw; /* Proportional button size */
+    padding: 0.5vw 1.2vw; /* Shorten button height */
+    border-radius: 8px;
+    background-color: #007bff;
     color: white;
     border: none;
     cursor: pointer;
@@ -106,7 +118,14 @@ h1 {
 }
 
 .date-form button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #0056b3;
+}
+
+.date-form label {
+    font-size: 1.5vw; /* Keep the "View History" label size unchanged */
+    font-weight: bold;
+    margin-bottom: 0.8vw; /* Maintain some spacing from the input */
+    display: block; /* Ensure proper alignment */
 }
 
 .calendar-container {
@@ -143,6 +162,44 @@ h1 {
 .calendar-table .current-day {
     background-color: #007bff;
     color: white;
+}
+
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); 
+}
+
+.modal-content {
+    background-color: #2c3e50;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid white;
+    width: 60%;
+    color: white;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .rating-score {
@@ -346,20 +403,24 @@ h1 {
                 <p>{{student.curr_rank}}</p>
                 {% endif %}
             </div>
+
             <!--- Date Form -->
             <div class="date-form">
                 <form id="dateForm">
-                    <label for="date">Enter Date (MM/YYYY):</label>
+                    <label for="date">View History</label>
                     <input type="text" id="date" name="date" placeholder="MM/YYYY">
-                    <button type="submit">View History</button>
+                    <button type="submit">Confirm</button>
                 </form>
             </div>
 
-             <!-- Calendar Container -->
-            <div id="calendarContainer" class="calendar-container">
-                <h3 id="calendarHeader"></h3>
-                <table id="calendar" class="calendar-table"></table>
-            </div>
+             <!-- Calendar Modal -->
+             <div id="calendarModal" class="modal">
+             <div class="modal-content">
+                 <span class="close" id="closeModal">&times;</span>
+                 <h3 id="calendarHeader"></h3>
+                 <table id="calendar" class="calendar-table"></table>
+             </div>
+         </div>
 
             <div class="rating-score">
                 <p>Rating Score</p>
@@ -386,38 +447,32 @@ h1 {
 
 <script>
     document.getElementById('dateForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the form from actually submitting
-
+        event.preventDefault(); // Prevent form submission
+    
         var dateValue = document.getElementById('date').value;
-
-        // Validation for MM/YYYY format using regex
         var datePattern = /^(0[1-9]|1[0-2])\/\d{4}$/;
+    
         if (datePattern.test(dateValue)) {
-            generateCalendar(dateValue); // Call the function to generate the calendar
+            generateCalendar(dateValue);
         } else {
             alert("Invalid date format. Please use MM/YYYY.");
         }
     });
-
+    
     function generateCalendar(dateValue) {
-        // Parse the date (MM/YYYY)
         var [month, year] = dateValue.split('/');
         month = parseInt(month) - 1; // JavaScript months are 0-11
         year = parseInt(year);
-
-        // Get the first day of the month and the number of days in the month
+    
         var firstDay = new Date(year, month, 1).getDay();
         var daysInMonth = new Date(year, month + 1, 0).getDate();
-
-        // Clear any previous calendar
+    
         var calendar = document.getElementById('calendar');
         calendar.innerHTML = '';
-
-        // Display the month and year at the top
+    
         var calendarHeader = document.getElementById('calendarHeader');
         calendarHeader.textContent = `${getMonthName(month)} ${year}`;
-
-        // Generate the table header for days of the week
+    
         var headerRow = document.createElement('tr');
         var weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         weekdays.forEach(function(day) {
@@ -426,10 +481,9 @@ h1 {
             headerRow.appendChild(th);
         });
         calendar.appendChild(headerRow);
-
-        // Create the calendar days
+    
         var currentDay = 1;
-        for (var row = 0; row < 6; row++) { // Maximum of 6 rows for a month
+        for (var row = 0; row < 6; row++) {
             var tr = document.createElement('tr');
             for (var col = 0; col < 7; col++) {
                 var td = document.createElement('td');
@@ -437,8 +491,9 @@ h1 {
                     td.textContent = '';
                 } else if (currentDay <= daysInMonth) {
                     td.textContent = currentDay;
+                    td.style.color = "white";
                     if (currentDay === new Date().getDate() && new Date().getMonth() === month && new Date().getFullYear() === year) {
-                        td.classList.add('current-day'); // Highlight today's date
+                        td.classList.add('current-day');
                     }
                     currentDay++;
                 }
@@ -447,11 +502,14 @@ h1 {
             calendar.appendChild(tr);
             if (currentDay > daysInMonth) break;
         }
-
-        // Show the calendar container
-        document.getElementById('calendarContainer').style.display = 'block';
+    
+        document.getElementById('calendarModal').style.display = 'block';
     }
-
+    
+    document.getElementById('closeModal').addEventListener('click', function() {
+        document.getElementById('calendarModal').style.display = 'none';
+    });
+    
     function getMonthName(month) {
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         return months[month];
