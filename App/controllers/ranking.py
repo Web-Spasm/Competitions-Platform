@@ -21,13 +21,18 @@ def create_ranking(ranking_history_id, competition_id, rank, date):
         db.session.rollback()
         print("Ranking creation failed!")
         return None
-    
+
 def get_ranking_by_id(ranking_id):
-    return Ranking.query.get(ranking_id)
+    ranking = Ranking.query.get(ranking_id)
+    if not ranking:
+        print(f'Ranking with ID: {ranking_id} not found!')
+        return None
+    return ranking
 
 def get_rankings_by_id_json(ranking_id):
     ranking = Ranking.query.get(ranking_id)
     if not ranking:
+        print(f'Ranking with ID: {ranking_id} not found!')
         return None
     return ranking.get_json()
 
@@ -48,4 +53,3 @@ def update_ranking(ranking_id, ranking_history_id, competition_id, rank, date):
         db.session.rollback()
         print("Ranking update failed!")
         return None
-    
