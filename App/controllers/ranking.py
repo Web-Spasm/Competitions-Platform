@@ -30,6 +30,7 @@ def create_ranking(ranking_history_id, competition_id, rank, date):
         print("Ranking creation failed!")
         return None
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 def get_ranking_by_id(ranking_id):
     ranking = Ranking.query.get(ranking_id).first()
@@ -56,12 +57,20 @@ def get_rankings_by_id_json(ranking_id):
 def update_ranking(ranking_id, ranking_history_id, competition_id, rank, colour,  date):
 =======
     
+=======
+
+>>>>>>> 26f665b (Added Null checks in ranking history and ranking)
 def get_ranking_by_id(ranking_id):
-    return Ranking.query.get(ranking_id)
+    ranking = Ranking.query.get(ranking_id)
+    if not ranking:
+        print(f'Ranking with ID: {ranking_id} not found!')
+        return None
+    return ranking
 
 def get_rankings_by_id_json(ranking_id):
     ranking = Ranking.query.get(ranking_id)
     if not ranking:
+        print(f'Ranking with ID: {ranking_id} not found!')
         return None
     return ranking.get_json()
 
@@ -87,8 +96,12 @@ def update_ranking(ranking_id, ranking_history_id, competition_id, rank, date):
         db.session.rollback()
         print("Ranking update failed!")
 <<<<<<< HEAD
+<<<<<<< HEAD
         return None
 =======
         return None
     
 >>>>>>> 27d47c7 (Added controllers for Ranking History and Ranking, also modified the Moderators's add_results function)
+=======
+        return None
+>>>>>>> 26f665b (Added Null checks in ranking history and ranking)
