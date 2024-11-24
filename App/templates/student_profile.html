@@ -83,6 +83,7 @@ h1 {
 }
 
 .date-form {
+<<<<<<< HEAD
     border-radius: 20px; 
     width: 25%; 
     outline-style: solid;
@@ -219,6 +220,17 @@ h1 {
 
 .calendar-navigation button:hover {
     background-color: #0056b3;
+=======
+    border-radius: 25px;
+    width: 25%;
+    outline-style: solid;
+    margin: auto;
+    text-align: center;
+    font-size: 2vw;
+    color: white;
+    background-color: black;
+    padding: 2vw;
+>>>>>>> 26e63f6 (add date form)
 }
 
 .rating-score {
@@ -422,6 +434,7 @@ h1 {
                 <p>{{student.curr_rank}}</p>
                 {% endif %}
             </div>
+<<<<<<< HEAD
 
             <!--- Date Form -->
             <div class="date-form">
@@ -445,6 +458,16 @@ h1 {
                 </div>
             </div>
 
+=======
+            <!--- Date Form -->
+            <div class="date-form">
+                <form id="dateForm">
+                    <label for="date">Enter Date (MM/YYYY):</label>
+                    <input type="text" id="date" name="date" placeholder="MM/YYYY">
+                    <button type="submit">View History</button>
+                </form>
+            </div>
+>>>>>>> 26e63f6 (add date form)
             <div class="rating-score">
                 <p>Rating Score</p>
                 <p>{{'%0.2f' % student.rating_score|float}}</p>
@@ -469,6 +492,7 @@ h1 {
 </div>
 
 <script>
+<<<<<<< HEAD
     let currentMonth, currentYear;
 
     document.getElementById('dateForm').addEventListener('submit', function(event) {
@@ -479,10 +503,22 @@ h1 {
     
         if (datePattern.test(dateValue)) {
             generateCalendar(dateValue);
+=======
+    document.getElementById('dateForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the form from actually submitting
+    
+        var dateValue = document.getElementById('date').value;
+    
+        // Validation for MM/YYYY format using regex
+        var datePattern = /^(0[1-9]|1[0-2])\/\d{4}$/;
+        if (datePattern.test(dateValue)) {
+            alert("Date entered: " + dateValue);
+>>>>>>> 26e63f6 (add date form)
         } else {
             alert("Invalid date format. Please use MM/YYYY.");
         }
     });
+<<<<<<< HEAD
     
     function generateCalendar(dateValue) {
         var [month, year] = dateValue.split('/');
@@ -557,6 +593,8 @@ h1 {
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         return months[month];
     }
+=======
+>>>>>>> 26e63f6 (add date form)
 </script>
 
     <!---
