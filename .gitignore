@@ -4,3 +4,7 @@ __pycache__/
 
 # Ignore database file
 instance/temp-database.db
+
+# Ignore all __pycache__ directories and .pyc files in the project
+App/**/__pycache__/
+App/**/**/*.pyc
