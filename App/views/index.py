@@ -146,7 +146,7 @@ def init():
         for competition in reader:
             if competition['comp_name'] != 'TopCoder':
                 update_ratings(competition['mod_name'], competition['comp_name'])
-                update_rankings()
+                update_rankings(competition)
             #db.session.add(comp)
         #db.session.commit()
     
@@ -167,7 +167,7 @@ def health():
  #   return render_template('Student_Profile.html', user_id=user_id)
 """
 
-@index_views.route('/profile')
+@index_views.route('/profile', methods =['GET'])
 def profile():
     user_type = session['user_type']
     id = current_user.get_id()
@@ -189,30 +189,39 @@ def student_profile(id):
     
     profile_info = display_student_info(student.username)
     competitions = profile_info['competitions']
-    """
-    competitions = Competition.query.filter(Competition.participants.any(id=user_id)).all()
-    ranking = Ranking.query.filter_by(student_id=user_id).first()
-    notifications= get_notifications(user.username)
-    """
+   
+    ranking_history = get_ranking_history_by_id(id)
 
-    return render_template('student_profile.html', student=student, competitions=competitions, user=current_user)
+    if ranking_history:
+        ranks = get_rankings_by_history_id(ranking_history.id)
+        if ranks:
+            for rank in ranks:
+                print(f'Rank {rank.rank} and {rank.id}')
+
+    return render_template('student_profile.html', student=student, competitions=competitions, user=current_user, ranks=ranks)
 
 @index_views.route('/student_profile/<string:name>', methods=['GET'])
 def student_profile_by_name(name):
     student = get_student_by_username(name)
-
+    
     if not student:
         return render_template('404.html')
     
     profile_info = display_student_info(student.username)
     competitions = profile_info['competitions']
-    """
-    competitions = Competition.query.filter(Competition.participants.any(id=user_id)).all()
-    ranking = Ranking.query.filter_by(student_id=user_id).first()
-    notifications= get_notifications(user.username)
-    """
 
-    return render_template('student_profile.html', student=student, competitions=competitions, user=current_user)
+    ranking_history = get_ranking_history_by_id(student.id)
+
+    if ranking_history:
+        ranks = get_rankings_by_history_id(ranking_history.id)
+        if ranks:
+            for rank in ranks:
+                print(f'Rank {rank.rank} and {rank.id}')
+    else:
+        print(f'Ranking history not found.')
+ 
+
+    return render_template('student_profile.html', student=student, competitions=competitions, user=current_user, ranks=ranks)
 
 @index_views.route('/moderator_profile/<int:id>', methods=['GET'])
 def moderator_profile(id):   
@@ -220,14 +229,6 @@ def moderator_profile(id):
 
     if not moderator:
         return render_template('404.html')
-    """
-    profile_info = display_student_info(student.username)
-    competitions = profile_info['competitions']
-    
-    competitions = Competition.query.filter(Competition.participants.any(id=user_id)).all()
-    ranking = Ranking.query.filter_by(student_id=user_id).first()
-    notifications= get_notifications(user.username)
-    """
 
     return render_template('moderator_profile.html', moderator=moderator, user=current_user)
 
@@ -335,7 +336,7 @@ def init_postman():
 
         for competition in reader:
             update_ratings(competition['mod_name'], competition['comp_name'])
-            update_rankings()
+            update_rankings(competition)
             #db.session.add(comp)
         #db.session.commit()
     
