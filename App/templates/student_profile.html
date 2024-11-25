@@ -7,502 +7,499 @@
 {% block content %}
 
 <style>
-.notifications {
-    border: 5px solid #ccc; 
-    padding: 10px; 
-    margin-top: 10px;
-}
-
-.notifications ul {
-    list-style-type: none;
-}
-
-.notifications li {
-    margin-bottom: 15px; 
-}
-
-.headers {
-    width: 100%;
-    display: flex;
-}
-
-h1 {
-    padding: 2vw 0vw 0vw 2vw;
-    margin: 0vw;
-    /*color: white;*/
-}
-
-.profile-info {
-    width: 100%;
-    padding: 2vw;
-    display: flex;
-}
-
-.student-info {
-    border-radius: 25px;
-    width: 30%;
-    outline-style: solid;
-    background-color: black;
-    /*background-image: linear-gradient(#61677A, #000000);
-    color: white;*/
-}
-
-.student-image {
-    background-color: #343A40;
-    border-radius: 25px;
-    padding: 0vw;
-}
-
-.student-username {
-    color: white;
-    text-align: center;
-    padding: 0vw;
-    font-size: 3vw;
-}
-
-.results-info {
-    width: 70%;
-}
-
-.ranking-info {
-    display: flex;
-    height: 12vw;
-    margin: auto;
-}
-
-.rank {
-    border-radius: 25px;
-    width: 25%;
-    outline-style: solid;
-    margin: auto;
-    text-align: center;
-    font-size: 2vw;
-    color: white;
-    background-color: black;
-    /*background-image: linear-gradient(#61677A, #000000);*/
-}
-
-.date-form {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    border-radius: 20px; 
-    width: 25%; 
-    outline-style: solid;
-    margin: auto;
-    text-align: center;
-    font-size: 1.6vw; 
-    color: white;
-    background-color: black;
-    padding: 1vw 2vw; 
-}
-
-.date-form input[type="text"] {
-    font-size: 1.2vw; 
-    padding: 0.4vw; 
-    line-height: 1; 
-    border: 2px solid #ccc;
-    border-radius: 6px;
-    background-color: #ffffff;
-    color: #000000;
-    width: 80%; 
-    margin-top: -0.5vw;
-}
-
-.date-form button {
-    font-size: 1vw; 
-    padding: 0.5vw 1.2vw; 
-    border-radius: 8px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.date-form button:hover {
-    background-color: #0056b3;
-}
-
-.date-form label {
-    font-size: 1.5vw; 
-    font-weight: bold;
-    margin-bottom: 0.8vw; 
-    display: block; 
-}
-
-.calendar-container {
-    margin-top: 2vw;
-    color: white;
-    background-color: black;
-    padding: 2vw;
-    border-radius: 25px;
-    display: none;
-    text-align: center;
-}
-
-.calendar-table {
-    width: 100%;
-    margin-top: 2vw;
-    font-size: 1.5vw;
-    border-collapse: collapse;
-}
-
-.calendar-table th, .calendar-table td {
-    padding: 1vw;
-    text-align: center;
-    border: 1px solid white;
-}
-
-.calendar-table th {
-    background-color: #343A40;
-}
-
-.calendar-table td {
-    background-color: #2c3e50;
-}
-
-.calendar-table .current-day {
-    background-color: #007bff;
-    color: white;
-}
-
-.modal {
-    display: none; 
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5); 
-}
-
-.modal-content {
-    background-color: #2c3e50;
-    margin: 10% auto;
-    padding: 20px;
-    border: 1px solid white;
-    width: 60%;
-    color: white;
-    border-radius: 15px;
-    text-align: center;
-}
-
-.close {
-    color: white;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-    color: #bbb;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.calendar-navigation {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1vw;
-}
-
-.calendar-navigation button {
-    background-color: #007bff;
-    border: none;
-    color: white;
-    padding: 0.5vw 1vw;
-    font-size: 1.5vw;
-    cursor: pointer;
-}
-
-.calendar-navigation button:hover {
-    background-color: #0056b3;
-=======
-    border-radius: 25px;
-    width: 25%;
-=======
-    border-radius: 20px; /* Keep rounded corners */
-    width: 25%; /* Keep the original width */
->>>>>>> 8a07ddc (fixed text input and made everything else look even)
-    outline-style: solid;
-    margin: auto;
-    text-align: center;
-    font-size: 1.6vw; /* Keep font size proportional */
-    color: white;
-    background-color: black;
-<<<<<<< HEAD
-    padding: 2vw;
->>>>>>> 26e63f6 (add date form)
-=======
-    padding: 1vw 2vw; /* Reduce vertical padding to make the height shorter */
-}
-
-.date-form input[type="text"] {
-    font-size: 1.2vw; /* Proportional size for input text */
-    padding: 0.4vw; /* Shorten input height */
-    line-height: 1; /* Maintain compact spacing */
-    border: 2px solid #ccc;
-    border-radius: 6px;
-    background-color: #ffffff;
-    color: #000000;
-    width: 80%; /* Keep width of the input field consistent */
-    margin-top: -0.5vw;
->>>>>>> 8a07ddc (fixed text input and made everything else look even)
-}
-
-.date-form button {
-    font-size: 1vw; /* Proportional button size */
-    padding: 0.5vw 1.2vw; /* Shorten button height */
-    border-radius: 8px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.date-form button:hover {
-    background-color: #0056b3;
-}
-
-.date-form label {
-    font-size: 1.5vw; /* Keep the "View History" label size unchanged */
-    font-weight: bold;
-    margin-bottom: 0.8vw; /* Maintain some spacing from the input */
-    display: block; /* Ensure proper alignment */
-}
-
-.calendar-container {
-    margin-top: 2vw;
-    color: white;
-    background-color: black;
-    padding: 2vw;
-    border-radius: 25px;
-    display: none;
-    text-align: center;
-}
-
-.calendar-table {
-    width: 100%;
-    margin-top: 2vw;
-    font-size: 1.5vw;
-    border-collapse: collapse;
-}
-
-.calendar-table th, .calendar-table td {
-    padding: 1vw;
-    text-align: center;
-    border: 1px solid white;
-}
-
-.calendar-table th {
-    background-color: #343A40;
-}
-
-.calendar-table td {
-    background-color: #2c3e50;
-}
-
-.calendar-table .current-day {
-    background-color: #007bff;
-    color: white;
-}
-
-.modal {
-    display: none; 
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5); 
-}
-
-.modal-content {
-    background-color: #2c3e50;
-    margin: 10% auto;
-    padding: 20px;
-    border: 1px solid white;
-    width: 60%;
-    color: white;
-    border-radius: 15px;
-    text-align: center;
-}
-
-.close {
-    color: white;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-    color: #bbb;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.rating-score {
-    border-radius: 25px;
-    width: 25%;
-    outline-style: solid;
-    margin: auto;
-    text-align: center;
-    font-size: 2vw;
-    color: white;
-    background-color: black;
-    /*background-image: linear-gradient(#61677A, #000000);*/
-}
-
-.competition-list {
-    width: 95%;
-    margin: auto;
-    margin-top: 1.5vw;
-    outline-style: solid;
-    font-size: 2vw;
-    overflow-y: scroll;
-    height: 20vw;
-    color: white;
-    background-color: black;
-    /*background-image: radial-gradient(#61677A, #000000);*/
-}
-
-.competition-list li {
-    display: flex;
-    padding-left: 2vw;
-    margin: 2vw;
-    font-size: 1.5vw;
-    outline-style: solid;
-    border-radius: 25px;
-    color: white;
-    background-color: #343A40;
-    /*background-image: linear-gradient(#61677A, #000000);*/
-}
-
-.sidepanel {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    right: 0;
-    background-color: #000000;
-    overflow-x: hidden;
-    padding-top: 3vw;
-    transition: 0.5s;
-}
-
-.openbutton {
-    width: 5%;
-    margin-left: auto;
-    margin-top: 2vw;
-    margin-right: 2vw;
-}
-
-.mail-icon {
-    width: 75%;
-    margin-left: auto;
-    margin-right: 2vw;
-    padding-left: auto;
-    padding-right: 0vw;
-    border-radius: 25%;
-    justify-content: flex-end;
-}
-
-.sidepanel-header {
-    display: flex;
-    margin: 0vw 2vw 2vw 2vw;
-}
-
-.sidepanel-title {
-    color: #EEEEEE;
-}
-
-.sidepanel-closebutton {
-    margin-left: auto;
-    margin-right: 0vw;
-}
-
-.sidepanel-content ul li{
-    color: white;
-    background-color: #343A40;
-    border-radius: 25px;
-    height: 5vw;
-    margin: 2vw;
-    padding: 1vw;
-    outline-style: solid;
-}
-
-@media only screen and (max-width: 700px) {
-    .headers {
-        display: block;
+    .notifications {
+        border: 5px solid #ccc; 
+        padding: 10px; 
+        margin-top: 10px;
     }
-
+    
+    .notifications ul {
+        list-style-type: none;
+    }
+    
+    .notifications li {
+        margin-bottom: 15px; 
+    }
+    
+    .headers {
+        width: 100%;
+        display: flex;
+    }
+    
     h1 {
-        text-align: center;
+        padding: 2vw 0vw 0vw 2vw;
+        margin: 0vw;
+        /*color: white;*/
     }
     
     .profile-info {
-        display: block;
+        width: 100%;
+        padding: 2vw;
+        display: flex;
     }
-
+    
     .student-info {
-        width: 90%;
+        border-radius: 25px;
+        width: 30%;
+        outline-style: solid;
+        background-color: black;
+        /*background-image: linear-gradient(#61677A, #000000);
+        color: white;*/
+    }
+    
+    .student-image {
+        background-color: #343A40;
+        border-radius: 25px;
+        padding: 0vw;
+    }
+    
+    .student-username {
+        color: white;
+        text-align: center;
+        padding: 0vw;
+        font-size: 3vw;
+    }
+    
+    .results-info {
+        width: 70%;
+    }
+    
+    .ranking-info {
+        display: flex;
+        height: 12vw;
         margin: auto;
     }
-
-    .results-info {
-        width: 90%;
-    }
-
-    .student-username {
-        font-size: 10vw;
-    }
-
-    .results-info {
-        width: 100%;
-    }
-
-    .ranking-info {
-        height: 30vw;
-    }
-
-    .rank {
-        width: 40%;
-        font-size: 5vw;
-    }
-
-    .date-form {
-        width: 40%;
-        font-size: 5vw;
-        padding: 5vw;
-    }
-
-    .rating-score {
-        width: 40%;
-        font-size: 5vw;
-    }
-
-    .competition-list {
-        font-size: 5vw;
-        height: 50vw;
-        margin-top: 5vw;
-    }
-
-    .competition-list li {
-        font-size: 5vw;
-    }
-}
-</style>
     
+    .rank {
+        border-radius: 25px;
+        width: 25%;
+        outline-style: solid;
+        margin: auto;
+        text-align: center;
+        font-size: 2vw;
+        color: white;
+        background-color: black;
+        /*background-image: linear-gradient(#61677A, #000000);*/
+    }
+    
+    .date-form {
+        border-radius: 20px; 
+        width: 25%; 
+        outline-style: solid;
+        margin: auto;
+        text-align: center;
+        font-size: 1.6vw; 
+        color: white;
+        background-color: black;
+        padding: 1vw 2vw; 
+    }
+    
+    .date-form input[type="text"] {
+        font-size: 1.2vw; 
+        padding: 0.4vw; 
+        line-height: 1; 
+        border: 2px solid #ccc;
+        border-radius: 6px;
+        background-color: #ffffff;
+        color: #000000;
+        width: 80%; 
+        margin-top: -0.5vw;
+    }
+    
+    .date-form button {
+        font-size: 1vw; 
+        padding: 0.5vw 1.2vw; 
+        border-radius: 8px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .date-form button:hover {
+        background-color: #0056b3;
+    }
+    
+    .date-form label {
+        font-size: 1.5vw; 
+        font-weight: bold;
+        margin-bottom: 0.8vw; 
+        display: block; 
+    }
+    
+    .calendar-container {
+        margin-top: 2vw;
+        color: white;
+        background-color: black;
+        padding: 2vw;
+        border-radius: 25px;
+        display: none;
+        text-align: center;
+    }
+    
+    .calendar-table {
+        width: 100%;
+        margin-top: 2vw;
+        font-size: 1.5vw;
+        border-collapse: collapse;
+    }
+    
+    .calendar-table th, .calendar-table td {
+        padding: 1vw;
+        text-align: center;
+        border: 1px solid white;
+    }
+    
+    .calendar-table th {
+        background-color: #343A40;
+    }
+    
+    .calendar-table td {
+        background-color: #2c3e50;
+    }
+    
+    .calendar-table .current-day {
+        background-color: #007bff;
+        color: white;
+    }
+    
+    .modal {
+        display: none; 
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5); 
+    }
+    
+    .modal-content {
+        background-color: #2c3e50;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid white;
+        width: 60%;
+        color: white;
+        border-radius: 15px;
+        text-align: center;
+    }
+    
+    .close {
+        color: white;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    
+    .close:hover,
+    .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    
+    .calendar-navigation {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1vw;
+    }
+    
+    .calendar-navigation button {
+        background-color: #007bff;
+        border: none;
+        color: white;
+        padding: 0.5vw 1vw;
+        font-size: 1.5vw;
+        cursor: pointer;
+    }
+    
+    .calendar-navigation button:hover {
+        background-color: #0056b3;
+    
+        border-radius: 25px;
+        width: 25%;
+    
+        border-radius: 20px; /* Keep rounded corners */
+        width: 25%; /* Keep the original width */
+    
+        outline-style: solid;
+        margin: auto;
+        text-align: center;
+        font-size: 1.6vw; /* Keep font size proportional */
+        color: white;
+        background-color: black;
+    
+        padding: 2vw;
+    
+        padding: 1vw 2vw; /* Reduce vertical padding to make the height shorter */
+    }
+    
+    .date-form input[type="text"] {
+        font-size: 1.2vw; /* Proportional size for input text */
+        padding: 0.4vw; /* Shorten input height */
+        line-height: 1; /* Maintain compact spacing */
+        border: 2px solid #ccc;
+        border-radius: 6px;
+        background-color: #ffffff;
+        color: #000000;
+        width: 80%; /* Keep width of the input field consistent */
+        margin-top: -0.5vw;
+    
+    }
+    
+    .date-form button {
+        font-size: 1vw; /* Proportional button size */
+        padding: 0.5vw 1.2vw; /* Shorten button height */
+        border-radius: 8px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .date-form button:hover {
+        background-color: #0056b3;
+    }
+    
+    .date-form label {
+        font-size: 1.5vw; /* Keep the "View History" label size unchanged */
+        font-weight: bold;
+        margin-bottom: 0.8vw; /* Maintain some spacing from the input */
+        display: block; /* Ensure proper alignment */
+    }
+    
+    .calendar-container {
+        margin-top: 2vw;
+        color: white;
+        background-color: black;
+        padding: 2vw;
+        border-radius: 25px;
+        display: none;
+        text-align: center;
+    }
+    
+    .calendar-table {
+        width: 100%;
+        margin-top: 2vw;
+        font-size: 1.5vw;
+        border-collapse: collapse;
+    }
+    
+    .calendar-table th, .calendar-table td {
+        padding: 1vw;
+        text-align: center;
+        border: 1px solid white;
+    }
+    
+    .calendar-table th {
+        background-color: #343A40;
+    }
+    
+    .calendar-table td {
+        background-color: #2c3e50;
+    }
+    
+    .calendar-table .current-day {
+        background-color: #007bff;
+        color: white;
+    }
+    
+    .modal {
+        display: none; 
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5); 
+    }
+    
+    .modal-content {
+        background-color: #2c3e50;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid white;
+        width: 60%;
+        color: white;
+        border-radius: 15px;
+        text-align: center;
+    }
+    
+    .close {
+        color: white;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    
+    .close:hover,
+    .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    
+    .rating-score {
+        border-radius: 25px;
+        width: 25%;
+        outline-style: solid;
+        margin: auto;
+        text-align: center;
+        font-size: 2vw;
+        color: white;
+        background-color: black;
+        /*background-image: linear-gradient(#61677A, #000000);*/
+    }
+    
+    .competition-list {
+        width: 95%;
+        margin: auto;
+        margin-top: 1.5vw;
+        outline-style: solid;
+        font-size: 2vw;
+        overflow-y: scroll;
+        height: 20vw;
+        color: white;
+        background-color: black;
+        /*background-image: radial-gradient(#61677A, #000000);*/
+    }
+    
+    .competition-list li {
+        display: flex;
+        padding-left: 2vw;
+        margin: 2vw;
+        font-size: 1.5vw;
+        outline-style: solid;
+        border-radius: 25px;
+        color: white;
+        background-color: #343A40;
+        /*background-image: linear-gradient(#61677A, #000000);*/
+    }
+    
+    .sidepanel {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        background-color: #000000;
+        overflow-x: hidden;
+        padding-top: 3vw;
+        transition: 0.5s;
+    }
+    
+    .openbutton {
+        width: 5%;
+        margin-left: auto;
+        margin-top: 2vw;
+        margin-right: 2vw;
+    }
+    
+    .mail-icon {
+        width: 75%;
+        margin-left: auto;
+        margin-right: 2vw;
+        padding-left: auto;
+        padding-right: 0vw;
+        border-radius: 25%;
+        justify-content: flex-end;
+    }
+    
+    .sidepanel-header {
+        display: flex;
+        margin: 0vw 2vw 2vw 2vw;
+    }
+    
+    .sidepanel-title {
+        color: #EEEEEE;
+    }
+    
+    .sidepanel-closebutton {
+        margin-left: auto;
+        margin-right: 0vw;
+    }
+    
+    .sidepanel-content ul li{
+        color: white;
+        background-color: #343A40;
+        border-radius: 25px;
+        height: 5vw;
+        margin: 2vw;
+        padding: 1vw;
+        outline-style: solid;
+    }
+    
+    @media only screen and (max-width: 700px) {
+        .headers {
+            display: block;
+        }
+    
+        h1 {
+            text-align: center;
+        }
+        
+        .profile-info {
+            display: block;
+        }
+    
+        .student-info {
+            width: 90%;
+            margin: auto;
+        }
+    
+        .results-info {
+            width: 90%;
+        }
+    
+        .student-username {
+            font-size: 10vw;
+        }
+    
+        .results-info {
+            width: 100%;
+        }
+    
+        .ranking-info {
+            height: 30vw;
+        }
+    
+        .rank {
+            width: 40%;
+            font-size: 5vw;
+        }
+    
+        .date-form {
+            width: 40%;
+            font-size: 5vw;
+            padding: 5vw;
+        }
+    
+        .rating-score {
+            width: 40%;
+            font-size: 5vw;
+        }
+    
+        .competition-list {
+            font-size: 5vw;
+            height: 50vw;
+            margin-top: 5vw;
+        }
+    
+        .competition-list li {
+            font-size: 5vw;
+        }
+    }
+    </style>
+
 <div class="headers">
     <div>
         <h2 style="color: white; padding-left: 50px;">Profile</h2>
@@ -551,8 +548,6 @@ h1 {
                 <p>{{student.curr_rank}}</p>
                 {% endif %}
             </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
 
             <!--- Date Form -->
             <div class="date-form">
@@ -576,32 +571,6 @@ h1 {
                 </div>
             </div>
 
-=======
-=======
-
->>>>>>> 8a07ddc (fixed text input and made everything else look even)
-            <!--- Date Form -->
-            <div class="date-form">
-                <form id="dateForm">
-                    <label for="date">View History</label>
-                    <input type="text" id="date" name="date" placeholder="MM/YYYY">
-                    <button type="submit">Confirm</button>
-                </form>
-            </div>
-<<<<<<< HEAD
->>>>>>> 26e63f6 (add date form)
-=======
-
-             <!-- Calendar Modal -->
-             <div id="calendarModal" class="modal">
-             <div class="modal-content">
-                 <span class="close" id="closeModal">&times;</span>
-                 <h3 id="calendarHeader"></h3>
-                 <table id="calendar" class="calendar-table"></table>
-             </div>
-         </div>
-
->>>>>>> cf2d909 (implementation of calendar)
             <div class="rating-score">
                 <p>Rating Score</p>
                 <p>{{'%0.2f' % student.rating_score|float}}</p>
@@ -626,198 +595,95 @@ h1 {
 </div>
 
 <script>
-<<<<<<< HEAD
-    let currentMonth, currentYear;
+let currentMonth, currentYear;
 
-    document.getElementById('dateForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent form submission
-    
-        var dateValue = document.getElementById('date').value;
-        var datePattern = /^(0[1-9]|1[0-2])\/\d{4}$/;
-    
-        if (datePattern.test(dateValue)) {
-            generateCalendar(dateValue);
-=======
-    document.getElementById('dateForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent form submission
-    
-        var dateValue = document.getElementById('date').value;
-        var datePattern = /^(0[1-9]|1[0-2])\/\d{4}$/;
-    
-        if (datePattern.test(dateValue)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-            alert("Date entered: " + dateValue);
->>>>>>> 26e63f6 (add date form)
-=======
-            generateCalendar(dateValue); // Call the function to generate the calendar
->>>>>>> cf2d909 (implementation of calendar)
-=======
-            generateCalendar(dateValue);
->>>>>>> 8a07ddc (fixed text input and made everything else look even)
-        } else {
-            alert("Invalid date format. Please use MM/YYYY.");
-        }
+document.getElementById('dateForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form submission
+
+    var dateValue = document.getElementById('date').value;
+    var datePattern = /^(0[1-9]|1[0-2])\/\d{4}$/;
+
+    if (datePattern.test(dateValue)) {
+        alert("Date entered: " + dateValue);
+        generateCalendar(dateValue); // Call the function to generate the calendar
+    } else {
+        alert("Invalid date format. Please use MM/YYYY.");
+    }
+});
+
+function generateCalendar(dateValue) {
+    var [month, year] = dateValue.split('/');
+    currentMonth = parseInt(month) - 1; // JavaScript months are 0-11
+    currentYear = parseInt(year);
+
+    var firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    var daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+    var calendar = document.getElementById('calendar');
+    calendar.innerHTML = '';
+
+    var calendarHeader = document.getElementById('calendarHeader');
+    calendarHeader.textContent = `${getMonthName(currentMonth)} ${currentYear}`;
+
+    var headerRow = document.createElement('tr');
+    var weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    weekdays.forEach(function(day) {
+        var th = document.createElement('th');
+        th.textContent = day;
+        headerRow.appendChild(th);
     });
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    
-    function generateCalendar(dateValue) {
-        var [month, year] = dateValue.split('/');
-        currentMonth = parseInt(month) - 1; // JavaScript months are 0-11
-        currentYear = parseInt(year);
-    
-        var firstDay = new Date(currentYear, currentMonth, 1).getDay();
-        var daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-    
-        var calendar = document.getElementById('calendar');
-        calendar.innerHTML = '';
-    
-        var calendarHeader = document.getElementById('calendarHeader');
-        calendarHeader.textContent = `${getMonthName(currentMonth)} ${currentYear}`;
-    
-=======
+    calendar.appendChild(headerRow);
 
-=======
-    
->>>>>>> 8a07ddc (fixed text input and made everything else look even)
-    function generateCalendar(dateValue) {
-        var [month, year] = dateValue.split('/');
-        month = parseInt(month) - 1; // JavaScript months are 0-11
-        year = parseInt(year);
-    
-        var firstDay = new Date(year, month, 1).getDay();
-        var daysInMonth = new Date(year, month + 1, 0).getDate();
-    
-        var calendar = document.getElementById('calendar');
-        calendar.innerHTML = '';
-    
-        var calendarHeader = document.getElementById('calendarHeader');
-        calendarHeader.textContent = `${getMonthName(month)} ${year}`;
-<<<<<<< HEAD
-
-        // Generate the table header for days of the week
->>>>>>> cf2d909 (implementation of calendar)
-=======
-    
->>>>>>> 8a07ddc (fixed text input and made everything else look even)
-        var headerRow = document.createElement('tr');
-        var weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        weekdays.forEach(function(day) {
-            var th = document.createElement('th');
-            th.textContent = day;
-            headerRow.appendChild(th);
-        });
-        calendar.appendChild(headerRow);
-<<<<<<< HEAD
-<<<<<<< HEAD
-    
-        var currentDay = 1;
-        for (var row = 0; row < 6; row++) {
-=======
-
-        // Create the calendar days
-        var currentDay = 1;
-        for (var row = 0; row < 6; row++) { // Maximum of 6 rows for a month
->>>>>>> cf2d909 (implementation of calendar)
-=======
-    
-        var currentDay = 1;
-        for (var row = 0; row < 6; row++) {
->>>>>>> 8a07ddc (fixed text input and made everything else look even)
-            var tr = document.createElement('tr');
-            for (var col = 0; col < 7; col++) {
-                var td = document.createElement('td');
-                if (row === 0 && col < firstDay) {
-                    td.textContent = '';
-                } else if (currentDay <= daysInMonth) {
-                    td.textContent = currentDay;
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    td.style.color = "white";
-                    if (currentDay === new Date().getDate() && new Date().getMonth() === currentMonth && new Date().getFullYear() === currentYear) {
-                        td.classList.add('current-day');
-=======
-                    if (currentDay === new Date().getDate() && new Date().getMonth() === month && new Date().getFullYear() === year) {
-                        td.classList.add('current-day'); // Highlight today's date
->>>>>>> cf2d909 (implementation of calendar)
-=======
-                    td.style.color = "white";
-                    if (currentDay === new Date().getDate() && new Date().getMonth() === month && new Date().getFullYear() === year) {
-                        td.classList.add('current-day');
->>>>>>> 8a07ddc (fixed text input and made everything else look even)
-                    }
-                    currentDay++;
+    var currentDay = 1;
+    for (var row = 0; row < 6; row++) {
+        var tr = document.createElement('tr');
+        for (var col = 0; col < 7; col++) {
+            var td = document.createElement('td');
+            if (row === 0 && col < firstDay) {
+                td.textContent = '';
+            } else if (currentDay <= daysInMonth) {
+                td.textContent = currentDay;
+                td.style.color = "white";
+                if (currentDay === new Date().getDate() && new Date().getMonth() === currentMonth && new Date().getFullYear() === currentYear) {
+                    td.classList.add('current-day');
                 }
-                tr.appendChild(td);
+                currentDay++;
             }
-            calendar.appendChild(tr);
-            if (currentDay > daysInMonth) break;
+            tr.appendChild(td);
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-    
-        document.getElementById('calendarModal').style.display = 'block';
+        calendar.appendChild(tr);
+        if (currentDay > daysInMonth) break;
     }
-    
-    document.getElementById('closeModal').addEventListener('click', function() {
-        document.getElementById('calendarModal').style.display = 'none';
-    });
 
-    document.getElementById('prevMonth').addEventListener('click', function() {
-        currentMonth -= 1;
-        if (currentMonth < 0) {
-            currentMonth = 11;
-            currentYear -= 1;
-        }
-        generateCalendar((currentMonth + 1) + '/' + currentYear);
-    });
+    document.getElementById('calendarModal').style.display = 'block';
+}
 
-    document.getElementById('nextMonth').addEventListener('click', function() {
-        currentMonth += 1;
-        if (currentMonth > 11) {
-            currentMonth = 0;
-            currentYear += 1;
-        }
-        generateCalendar((currentMonth + 1) + '/' + currentYear);
-    });
-=======
+document.getElementById('closeModal').addEventListener('click', function() {
+    document.getElementById('calendarModal').style.display = 'none';
+});
 
-        // Show the calendar container
-        document.getElementById('calendarContainer').style.display = 'block';
+document.getElementById('prevMonth').addEventListener('click', function() {
+    currentMonth -= 1;
+    if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear -= 1;
     }
->>>>>>> cf2d909 (implementation of calendar)
+    generateCalendar((currentMonth + 1) + '/' + currentYear);
+});
 
-=======
-    
-        document.getElementById('calendarModal').style.display = 'block';
+document.getElementById('nextMonth').addEventListener('click', function() {
+    currentMonth += 1;
+    if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear += 1;
     }
-    
-    document.getElementById('closeModal').addEventListener('click', function() {
-        document.getElementById('calendarModal').style.display = 'none';
-    });
-    
->>>>>>> 8a07ddc (fixed text input and made everything else look even)
-    function getMonthName(month) {
-        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        return months[month];
-    }
-<<<<<<< HEAD
-=======
->>>>>>> 26e63f6 (add date form)
-=======
->>>>>>> cf2d909 (implementation of calendar)
+    generateCalendar((currentMonth + 1) + '/' + currentYear);
+});
+
+function getMonthName(month) {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return months[month];
+}
 </script>
 
-    <!---
-    <div class="notifications">
-        <h5>Notifications:</h5>
-        <ul>
-            {% for notification in notifications %}
-                <li>{{ notification.message }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-    -->
 {% endblock %}

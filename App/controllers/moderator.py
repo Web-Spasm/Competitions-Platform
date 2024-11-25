@@ -102,28 +102,12 @@ def add_results(mod_name, comp_name, team_name, score):
 
                         # adjusted to create or update ranking history
                         for student in team.students:
-<<<<<<< HEAD
-<<<<<<< HEAD
                             ranking_history = RankingHistory.query.filter_by(student_id=student.id).first()
-=======
-                            ranking_history = RankingHistory.query.filter_by(student_id=student.id, date=comp.date).first()
->>>>>>> 27d47c7 (Added controllers for Ranking History and Ranking, also modified the Moderators's add_results function)
-=======
-                            ranking_history = RankingHistory.query.filter_by(student_id=student.id).first()
->>>>>>> 86b4459 (Edited student, ranking, ranking_history and modertor contollers, edited ranking model and initialsation commands)
                             if not ranking_history:
                                 ranking_history = RankingHistory(student_id=student.id, date=comp.date)
                                 db.session.add(ranking_history)
                                 db.session.commit()
-<<<<<<< HEAD
-<<<<<<< HEAD
         
-=======
-                            
->>>>>>> 27d47c7 (Added controllers for Ranking History and Ranking, also modified the Moderators's add_results function)
-=======
-        
->>>>>>> 86b4459 (Edited student, ranking, ranking_history and modertor contollers, edited ranking model and initialsation commands)
                             ranking = Ranking(ranking_history_id=ranking_history.id, competition_id=comp.id, rank=comp_team.points_earned)
                             db.session.add(ranking)
                             db.session.commit()
