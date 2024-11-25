@@ -1,3 +1,6 @@
 # Ignore Python compiled files
 __pycache__/
 *.pyc
+
+# Ignore database file
+instance/temp-database.db
