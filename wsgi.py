@@ -27,6 +27,8 @@ def initialize():
 
         for student in reader:
             stud = create_student(student['username'], student['password'])
+            date_created = date.today().strftime("%d-%m-%Y")
+            ranking_history = create_ranking_history(stud.id, date_created)
             #db.session.add(stud)
         #db.session.commit()
     
@@ -66,11 +68,12 @@ def initialize():
 
     with open("competitions.csv") as competitions_file:
         reader = csv.DictReader(competitions_file)
-
+        
         for competition in reader:
             if competition['comp_name'] != 'TopCoder':
                 update_ratings(competition['mod_name'], competition['comp_name'])
-                update_rankings()
+                competition_query = Competition.query.filter_by(name=competition['comp_name']).first()
+                update_rankings(competition_query)
             #db.session.add(comp)
         #db.session.commit()
     
@@ -217,7 +220,8 @@ def add_results_command(mod_name, comp_name, team_name, student1, student2, stud
 @click.argument("comp_name", default="comp1")
 def update_rankings_command(mod_name, comp_name):
     update_ratings(mod_name, comp_name)
-    update_rankings()
+    comp = Competition.query.filter_by(name = comp_name).first()
+    update_rankings(comp)
 
 @mod_cli.command("rankings", help="Displays overall rankings")
 def display_rankings_command():
