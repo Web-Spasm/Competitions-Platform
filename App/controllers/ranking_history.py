@@ -19,14 +19,14 @@ def create_ranking_history(student_id, date):
         return None
 
 def get_ranking_history_by_id(student_id):
-    ranking_history = RankingHistory.query.get(student_id)
+    ranking_history = RankingHistory.query.filter_by(student_id=student_id).first()
     if not ranking_history:
         print(f'Ranking History for student with ID: {student_id} not found!')
         return None
     return ranking_history
 
 def get_ranking_history_by_id_json(student_id):
-    ranking_history = RankingHistory.query.get(student_id)
+    ranking_history = RankingHistory.query.get(student_id).first()
     if not ranking_history:
         print(f'Ranking History for student with ID: {student_id} not found!')
         return None

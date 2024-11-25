@@ -1,5 +1,7 @@
+from datetime import date
 from App.database import db
 from App.models import Student, Competition, Notification, CompetitionTeam
+from App.controllers import ranking, ranking_history
 
 def create_student(username, password):
     student = get_student_by_username(username)
@@ -11,8 +13,10 @@ def create_student(username, password):
     try:
         db.session.add(newStudent)
         db.session.commit()
-        print(f'New Student: {username} created!')
+
+        print(f'New Student: {username} created!')  
         return newStudent
+    
     except Exception as e:
         db.session.rollback()
         print(f'Something went wrong creating {username}')
@@ -81,7 +85,7 @@ def display_notifications(username):
     else:
         return {"notifications":[notification.to_Dict() for notification in student.notifications]}
 
-def update_rankings():
+def update_rankings(competition):
     students = get_all_students()
     
     students.sort(key=lambda x: (x.rating_score, x.comp_count), reverse=True)
@@ -97,6 +101,8 @@ def update_rankings():
             curr_rank = count
             curr_high = student.rating_score
 
+        student_history = ranking_history.get_ranking_history_by_id(student.id)
+
         if student.comp_count != 0:
             leaderboard.append({"placement": curr_rank, "student": student.username, "rating score":student.rating_score})
             count += 1
@@ -104,18 +110,24 @@ def update_rankings():
             student.curr_rank = curr_rank
             if student.prev_rank == 0:
                 message = f'RANK : {student.curr_rank}. Congratulations on your first rank!'
+                student_ranking = ranking.create_ranking(student_history.id, competition.id, curr_rank, 'green' ,competition.date)
             elif student.curr_rank == student.prev_rank:
                 message = f'RANK : {student.curr_rank}. Well done! You retained your rank.'
+                student_ranking = ranking.create_ranking(student_history.id, competition.id, curr_rank, 'blue' ,competition.date)
             elif student.curr_rank < student.prev_rank:
                 message = f'RANK : {student.curr_rank}. Congratulations! Your rank has went up.'
+                student_ranking = ranking.create_ranking(student_history.id, competition.id, curr_rank,'green' ,competition.date)
             else:
                 message = f'RANK : {student.curr_rank}. Oh no! Your rank has went down.'
+                student_ranking = ranking.create_ranking(student_history.id, competition.id, curr_rank, 'red' ,competition.date)
+
             student.prev_rank = student.curr_rank
             notification = Notification(student.id, message)
             student.notifications.append(notification)
 
             try:
                 db.session.add(student)
+                db.session.add(student_ranking)
                 db.session.commit()
             except Exception as e:
                 db.session.rollback()

@@ -175,7 +175,7 @@ def confirm_results(comp_name):
     competition = get_competition_by_name(comp_name)
 
     if update_ratings(moderator.username, competition.name):
-        update_rankings()
+        update_rankings(competition)
 
     leaderboard = display_competition_results(comp_name)
 
