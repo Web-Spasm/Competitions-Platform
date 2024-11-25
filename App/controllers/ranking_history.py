@@ -21,10 +21,14 @@ def create_ranking_history(student_id, date):
 def get_ranking_history_by_id(student_id):
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     ranking_history = RankingHistory.query.filter_by(student_id=student_id).first()
 =======
     ranking_history = RankingHistory.query.get(student_id)
 >>>>>>> 26f665b (Added Null checks in ranking history and ranking)
+=======
+    ranking_history = RankingHistory.query.filter_by(student_id=student_id).first()
+>>>>>>> 86b4459 (Edited student, ranking, ranking_history and modertor contollers, edited ranking model and initialsation commands)
     if not ranking_history:
         print(f'Ranking History for student with ID: {student_id} not found!')
         return None
@@ -41,7 +45,7 @@ def get_ranking_history_by_id_json(student_id):
 >>>>>>> 26f665b (Added Null checks in ranking history and ranking)
 
 def get_ranking_history_by_id_json(student_id):
-    ranking_history = RankingHistory.query.get(student_id)
+    ranking_history = RankingHistory.query.get(student_id).first()
     if not ranking_history:
 <<<<<<< HEAD
 >>>>>>> 27d47c7 (Added controllers for Ranking History and Ranking, also modified the Moderators's add_results function)
