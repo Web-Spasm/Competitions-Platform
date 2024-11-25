@@ -3,11 +3,12 @@ from datetime import datetime
 from .competition_moderator import *
 from .competition_team import *
 
+
 class Competition(db.Model):
-    __tablename__='competition'
+    __tablename__ = 'competition'
 
     id = db.Column(db.Integer, primary_key=True)
-    name =  db.Column(db.String, nullable=False, unique=True)
+    name = db.Column(db.String, nullable=False, unique=True)
     date = db.Column(db.DateTime, default= datetime.utcnow)
     location = db.Column(db.String(120), nullable=False)
     level = db.Column(db.Float, default=1)
@@ -24,13 +25,13 @@ class Competition(db.Model):
         self.max_score = max_score
         self.moderators = []
         self.teams = []
-    
+
     def add_mod(self, mod):
         for m in self.moderators:
             if m.id == mod.id:
                 print(f'{mod.username} already added to {self.name}!')
                 return None
-        
+
         comp_mod = CompetitionModerator(comp_id=self.id, mod_id=mod.id)
         try:
             self.moderators.append(mod)
@@ -48,7 +49,7 @@ class Competition(db.Model):
             if t.id == team.id:
                 print(f'Team already registered for {self.name}!')
                 return None
-        
+
         comp_team = CompetitionTeam(comp_id=self.id, team_id=team.id)
         try:
             self.teams.append(team)

@@ -1,6 +1,7 @@
 from App.database import db
 from App.models import User
 
+
 class Student(User):
     __tablename__ = 'student'
 
@@ -8,6 +9,7 @@ class Student(User):
     comp_count = db.Column(db.Integer, nullable=False, default=0)
     curr_rank = db.Column(db.Integer, nullable=False, default=0)
     prev_rank = db.Column(db.Integer, nullable=False, default=0)
+
     teams = db.relationship('Team', secondary='student_team', overlaps='students', lazy=True)
     notifications = db.relationship('Notification', backref='student', lazy=True)
 
