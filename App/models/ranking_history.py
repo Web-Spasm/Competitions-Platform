@@ -12,7 +12,7 @@ class RankingHistory(db.Model):
     def __init__(self, student_id, date):
         self.student_id = student_id
         self.date = date
-      
+
 
     def get_json(self):
         return {

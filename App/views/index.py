@@ -5,6 +5,7 @@ from App.models import db
 from App.controllers import *
 import csv
 
+
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
 
 @index_views.route('/', methods=['GET'])
@@ -186,19 +187,24 @@ def student_profile(id):
 
     if not student:
         return render_template('404.html')
-    
+
     profile_info = display_student_info(student.username)
     competitions = profile_info['competitions']
-   
+
     ranking_history = get_ranking_history_by_id(id)
 
     if ranking_history:
         ranks = get_rankings_by_history_id(ranking_history.id)
+        ranks_json = ranking_history.get_json()
         if ranks:
             for rank in ranks:
                 print(f'Rank {rank.rank} and {rank.id}')
 
-    return render_template('student_profile.html', student=student, competitions=competitions, user=current_user, ranks=ranks)
+    print(type(ranks_json))
+    print(type(ranks))
+
+    return render_template('student_profile.html', student=student, competitions=competitions, user=current_user, ranks=ranks, ranks_json=ranks_json)
+
 
 @index_views.route('/student_profile/<string:name>', methods=['GET'])
 def student_profile_by_name(name):

@@ -597,6 +597,26 @@
 <script>
 let currentMonth, currentYear;
 
+const rankingHistory = JSON.parse('{{ ranks_json|safe }}');
+
+function getStudentRankAndColor(day) {
+    // Date Ranks Colour Modifiers
+    const rankEntry = rankingHistory.(entry = new Date(entry.date).getData() == day)
+    if(rankEntry){
+        let color;
+        // change the color based on difference in rank from previous day
+        if(rankEntry.rank > student.curr_rank){
+            color = 'red';
+        } else if(rankEntry.rank < student.curr_rank){
+            color = 'green';
+        } else {
+            color = 'white';
+        }
+        return { rank: rankEntry.rank, color: color };
+    }
+    return { rank: student.curr_rank, color: 'white' };
+}
+
 document.getElementById('dateForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
 
@@ -644,6 +664,10 @@ function generateCalendar(dateValue) {
             } else if (currentDay <= daysInMonth) {
                 td.textContent = currentDay;
                 td.style.color = "white";
+
+                const { rank, color } = getStudentRankAndColor(currentDay);
+                td.style.backgroundColor = color;
+
                 if (currentDay === new Date().getDate() && new Date().getMonth() === currentMonth && new Date().getFullYear() === currentYear) {
                     td.classList.add('current-day');
                 }
@@ -684,6 +708,10 @@ function getMonthName(month) {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     return months[month];
 }
+
+
+
+
 </script>
 
 {% endblock %}
