@@ -597,14 +597,15 @@
 <script>
 let currentMonth, currentYear;
 
-const rankingHistory = JSON.parse('{{ ranks_json|safe }}');
+const rankingHistory = {{ ranks_json|tojson|safe }};
 
 function getStudentRankAndColor(day) {
     // Date Ranks Colour Modifiers
     const rankEntry = rankingHistory.(entry = new Date(entry.date).getData() == day)
     if(rankEntry){
         let color;
-        // change the color based on difference in rank from previous day
+        
+        alert("Ranks: " + rankEntry.rank);
         if(rankEntry.rank > student.curr_rank){
             color = 'red';
         } else if(rankEntry.rank < student.curr_rank){

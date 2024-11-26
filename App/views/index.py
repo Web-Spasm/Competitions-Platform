@@ -184,26 +184,26 @@ def profile():
 @index_views.route('/student_profile/<int:id>', methods=['GET'])
 def student_profile(id):
     student = get_student(id)
-
     if not student:
         return render_template('404.html')
-
+    
     profile_info = display_student_info(student.username)
     competitions = profile_info['competitions']
-
+   
     ranking_history = get_ranking_history_by_id(id)
-
+    ranks = []
+    ranks_json = []
     if ranking_history:
         ranks = get_rankings_by_history_id(ranking_history.id)
-        ranks_json = ranking_history.get_json()
+        ranks_json = [rank.get_json() for rank in ranks]
         if ranks:
             for rank in ranks:
                 print(f'Rank {rank.rank} and {rank.id}')
 
-    print(type(ranks_json))
-    print(type(ranks))
-
-    return render_template('student_profile.html', student=student, competitions=competitions, user=current_user, ranks=ranks, ranks_json=ranks_json)
+    return render_template('student_profile.html', student=student,
+                           competitions=competitions, user=current_user,
+                           ranks=ranks,
+                           ranks_json=ranks_json)
 
 
 @index_views.route('/student_profile/<string:name>', methods=['GET'])
