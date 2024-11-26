@@ -1,10 +1,9 @@
-from flask import Blueprint, json, redirect, render_template, request, send_from_directory, jsonify, session
+from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify, session
 from flask_jwt_extended import jwt_required, current_user as jwt_current_user
 from flask_login import login_required, login_user, current_user, logout_user
 from App.models import db
 from App.controllers import *
 import csv
-
 
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
 
@@ -184,6 +183,7 @@ def profile():
 @index_views.route('/student_profile/<int:id>', methods=['GET'])
 def student_profile(id):
     student = get_student(id)
+
     if not student:
         return render_template('404.html')
     
@@ -191,24 +191,19 @@ def student_profile(id):
     competitions = profile_info['competitions']
    
     ranking_history = get_ranking_history_by_id(id)
-    ranks = []
-    ranks_json = []
+
     if ranking_history:
         ranks = get_rankings_by_history_id(ranking_history.id)
-        ranks_json = [rank.get_json() for rank in ranks]
         if ranks:
             for rank in ranks:
                 print(f'Rank {rank.rank} and {rank.id} and Date {rank.date}')
 
-    return render_template('student_profile.html', student=student,
-                           competitions=competitions, user=current_user,
-                           ranks=ranks,
-                           ranks_json=ranks_json)
-
+    return render_template('student_profile.html', student=student, competitions=competitions, user=current_user, ranks=ranks)
 
 @index_views.route('/student_profile/<string:name>', methods=['GET'])
 def student_profile_by_name(name):
     student = get_student_by_username(name)
+    
     if not student:
         return render_template('404.html')
     
@@ -216,19 +211,25 @@ def student_profile_by_name(name):
     competitions = profile_info['competitions']
 
     ranking_history = get_ranking_history_by_id(student.id)
-    ranks = []
-    ranks_json = []
+
     if ranking_history:
         ranks = get_rankings_by_history_id(ranking_history.id)
-        ranks_json = [rank.get_json() for rank in ranks]
         if ranks:
             for rank in ranks:
                 print(f'Rank {rank.rank} and {rank.id} and Date {rank.date}')
+    else:
+        print(f'Ranking history not found.')
+ 
 
-    return render_template('student_profile.html', student=student,
-                           competitions=competitions, user=current_user,
-                           ranks=ranks,
-                           ranks_json=ranks_json)
+    return render_template('student_profile.html', student=student, competitions=competitions, user=current_user, ranks=ranks)
+
+@index_views.route('/api/rankings', methods=['GET'])
+def get_rankings():
+    month = request.args.get('month')
+    year = request.args.get('year')
+    rankings = get_rankings_for_month_year(month, year)
+    print("Rankings: ", rankings)
+    return jsonify(rankings)
 
 @index_views.route('/moderator_profile/<int:id>', methods=['GET'])
 def moderator_profile(id):   

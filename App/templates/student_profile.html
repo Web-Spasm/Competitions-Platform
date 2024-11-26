@@ -595,145 +595,122 @@
 </div>
 
 <script>
-    let currentMonth, currentYear;
-    
-    const rankingHistory = JSON.parse('{{ ranks_json|safe }}');
-    console.log('Ranking History:', rankingHistory);
-    
-    function getStudentRankAndColor(day) {
-        const rankEntry = rankingHistory.find(entry => {
-            const entryDate = new Date(entry.date);
-            return entryDate.getDate() == day && entryDate.getMonth() == currentMonth && entryDate.getFullYear() == currentYear;
-        });
-        console.log('Rank Entry for day', day, ':', rankEntry);
-        if(rankEntry){
-            let color;
-            if(rankEntry.rank > student.curr_rank){
-                color = 'red';
-            } else if(rankEntry.rank < student.curr_rank){
-                color = 'green';
-            } else {
-                color = 'blue';
-            }
-            return { rank: rankEntry.rank, color: color };
-        }
-        return { rank: student.curr_rank, color: 'white' };
+let currentMonth, currentYear;
+
+document.getElementById('dateForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form submission
+
+    var dateValue = document.getElementById('date').value;
+    var datePattern = /^(0[1-9]|1[0-2])\/\d{4}$/;
+
+    if (datePattern.test(dateValue)) {
+        alert("Date entered: " + dateValue);
+        generateCalendar(dateValue); // Call the function to generate the calendar
+    } else {
+        alert("Invalid date format. Please use MM/YYYY.");
     }
-    
-    document.getElementById('dateForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent form submission
-    
-        var dateValue = document.getElementById('date').value;
-        console.log('Date Value:', dateValue);
-        var datePattern = /^(0[1-9]|1[0-2])\/\d{4}$/;
-    
-        if (datePattern.test(dateValue)) {
-            console.log('Date format is valid');
-            generateCalendar(dateValue); // Call the function to generate the calendar
-        } else {
-            console.log('Invalid date format');
-            alert("Invalid date format. Please use MM/YYYY.");
-        }
+});
+
+async function fetchRankData(month, year) {
+    const response = await fetch(`/api/rankings?month=${month}&year=${year}`);
+    const data = await response.json();
+    return data;
+}
+
+async function generateCalendar(dateValue) {
+    var [month, year] = dateValue.split('/');
+    currentMonth = parseInt(month) - 1; // JavaScript months are 0-11
+    currentYear = parseInt(year);
+
+    var firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    var daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+    var calendar = document.getElementById('calendar');
+    calendar.innerHTML = '';
+
+    var calendarHeader = document.getElementById('calendarHeader');
+    calendarHeader.textContent = `${getMonthName(currentMonth)} ${currentYear}`;
+
+    var headerRow = document.createElement('tr');
+    var weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    weekdays.forEach(function(day) {
+        var th = document.createElement('th');
+        th.textContent = day;
+        headerRow.appendChild(th);
     });
-    
-    function generateCalendar(dateValue) {
-        console.log('Generating calendar for date:', dateValue);
-        var [month, year] = dateValue.split('/');
-        currentMonth = parseInt(month) - 1; // JavaScript months are 0-11
-        currentYear = parseInt(year);
-        console.log('Current Month:', currentMonth, 'Current Year:', currentYear);
-    
-        var firstDay = new Date(currentYear, currentMonth, 1).getDay();
-        var daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-        console.log('First Day:', firstDay, 'Days in Month:', daysInMonth);
-    
-        var calendar = document.getElementById('calendar');
-        if (!calendar) {
-            console.error('Calendar element not found');
-            return;
-        }
-        calendar.innerHTML = '';
-    
-        var calendarHeader = document.getElementById('calendarHeader');
-        if (!calendarHeader) {
-            console.error('Calendar header element not found');
-            return;
-        }
-        calendarHeader.textContent = `${getMonthName(currentMonth)} ${currentYear}`;
-    
-        var headerRow = document.createElement('tr');
-        var weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        weekdays.forEach(function(day) {
-            var th = document.createElement('th');
-            th.textContent = day;
-            headerRow.appendChild(th);
-        });
-        calendar.appendChild(headerRow);
-    
-        var currentDay = 1;
-        for (var row = 0; row < 6; row++) {
-            var tr = document.createElement('tr');
-            for (var col = 0; col < 7; col++) {
-                var td = document.createElement('td');
-                if (row === 0 && col < firstDay) {
-                    td.textContent = '';
-                } else if (currentDay <= daysInMonth) {
-                    td.textContent = currentDay;
-                    td.style.color = "white";
-    
-                    const { rank, color } = getStudentRankAndColor(currentDay);
-                    console.log('Day:', currentDay, 'Rank:', rank, 'Color:', color);
-                    td.style.backgroundColor = color;
-    
-                    if (currentDay === new Date().getDate() && new Date().getMonth() === currentMonth && new Date().getFullYear() === currentYear) {
-                        td.classList.add('current-day');
+    calendar.appendChild(headerRow);
+
+    var rankData = await fetchRankData(currentMonth + 1, currentYear);
+    console.log(rankData); // Debug: Log rank data
+    var previousRank = null;
+
+    var currentDay = 1;
+    for (var row = 0; row < 6; row++) {
+        var tr = document.createElement('tr');
+        for (var col = 0; col < 7; col++) {
+            var td = document.createElement('td');
+            if (row === 0 && col < firstDay) {
+                td.textContent = '';
+            } else if (currentDay <= daysInMonth) {
+                td.textContent = currentDay;
+
+                var currentRank = rankData[currentDay];
+                console.log(`Day: ${currentDay}, Current Rank: ${currentRank}, Previous Rank: ${previousRank}`); // Debug: Log rank comparison
+                if (previousRank !== null && currentRank !== undefined) {
+                    if (currentRank < previousRank) {
+                        td.style.backgroundColor = "green";
+                    } else if (currentRank > previousRank) {
+                        td.style.backgroundColor = "red";
+                    } else if (currentRank === previousRank) {
+                        td.style.backgroundColor = "blue";
                     }
-                    currentDay++;
+                } else if (previousRank === null && currentRank !== undefined) {
+                    td.style.backgroundColor = "green";
                 }
-                tr.appendChild(td);
+                if (currentRank !== undefined) {
+                    previousRank = currentRank;
+                }
+
+                if (currentDay === new Date().getDate() && new Date().getMonth() === currentMonth && new Date().getFullYear() === currentYear) {
+                    td.classList.add('current-day');
+                }
+                currentDay++;
             }
-            calendar.appendChild(tr);
-            if (currentDay > daysInMonth) break;
+            tr.appendChild(td);
         }
-    
-        console.log('Displaying calendar modal');
-        var calendarModal = document.getElementById('calendarModal');
-        if (!calendarModal) {
-            console.error('Calendar modal element not found');
-            return;
-        }
-        calendarModal.style.display = 'block';
+        calendar.appendChild(tr);
+        if (currentDay > daysInMonth) break;
     }
-    
-    document.getElementById('closeModal').addEventListener('click', function() {
-        console.log('Closing calendar modal');
-        document.getElementById('calendarModal').style.display = 'none';
-    });
-    
-    document.getElementById('prevMonth').addEventListener('click', function() {
-        console.log('Previous month clicked');
-        currentMonth -= 1;
-        if (currentMonth < 0) {
-            currentMonth = 11;
-            currentYear -= 1;
-        }
-        generateCalendar((currentMonth + 1) + '/' + currentYear);
-    });
-    
-    document.getElementById('nextMonth').addEventListener('click', function() {
-        console.log('Next month clicked');
-        currentMonth += 1;
-        if (currentMonth > 11) {
-            currentMonth = 0;
-            currentYear += 1;
-        }
-        generateCalendar((currentMonth + 1) + '/' + currentYear);
-    });
-    
-    function getMonthName(month) {
-        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        return months[month];
+
+    document.getElementById('calendarModal').style.display = 'block';
+}
+
+document.getElementById('closeModal').addEventListener('click', function() {
+    document.getElementById('calendarModal').style.display = 'none';
+});
+
+document.getElementById('prevMonth').addEventListener('click', function() {
+    currentMonth -= 1;
+    if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear -= 1;
     }
+    generateCalendar((currentMonth + 1) + '/' + currentYear);
+});
+
+document.getElementById('nextMonth').addEventListener('click', function() {
+    currentMonth += 1;
+    if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear += 1;
+    }
+    generateCalendar((currentMonth + 1) + '/' + currentYear);
+});
+
+function getMonthName(month) {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return months[month];
+}
 </script>
 
 {% endblock %}
