@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify, session
+from flask import Blueprint, json, redirect, render_template, request, send_from_directory, jsonify, session
 from flask_jwt_extended import jwt_required, current_user as jwt_current_user
 from flask_login import login_required, login_user, current_user, logout_user
 from App.models import db
@@ -198,7 +198,7 @@ def student_profile(id):
         ranks_json = [rank.get_json() for rank in ranks]
         if ranks:
             for rank in ranks:
-                print(f'Rank {rank.rank} and {rank.id}')
+                print(f'Rank {rank.rank} and {rank.id} and Date {rank.date}')
 
     return render_template('student_profile.html', student=student,
                            competitions=competitions, user=current_user,
@@ -209,7 +209,6 @@ def student_profile(id):
 @index_views.route('/student_profile/<string:name>', methods=['GET'])
 def student_profile_by_name(name):
     student = get_student_by_username(name)
-    
     if not student:
         return render_template('404.html')
     
@@ -217,17 +216,19 @@ def student_profile_by_name(name):
     competitions = profile_info['competitions']
 
     ranking_history = get_ranking_history_by_id(student.id)
-
+    ranks = []
+    ranks_json = []
     if ranking_history:
         ranks = get_rankings_by_history_id(ranking_history.id)
+        ranks_json = [rank.get_json() for rank in ranks]
         if ranks:
             for rank in ranks:
-                print(f'Rank {rank.rank} and {rank.id}')
-    else:
-        print(f'Ranking history not found.')
- 
+                print(f'Rank {rank.rank} and {rank.id} and Date {rank.date}')
 
-    return render_template('student_profile.html', student=student, competitions=competitions, user=current_user, ranks=ranks)
+    return render_template('student_profile.html', student=student,
+                           competitions=competitions, user=current_user,
+                           ranks=ranks,
+                           ranks_json=ranks_json)
 
 @index_views.route('/moderator_profile/<int:id>', methods=['GET'])
 def moderator_profile(id):   
