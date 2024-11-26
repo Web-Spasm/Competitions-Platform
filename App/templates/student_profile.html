@@ -611,12 +611,6 @@ document.getElementById('dateForm').addEventListener('submit', function(event) {
     }
 });
 
-async function fetchRankData(month, year) {
-    const response = await fetch(`/api/rankings?month=${month}&year=${year}`);
-    const data = await response.json();
-    return data;
-}
-
 async function generateCalendar(dateValue) {
     var [month, year] = dateValue.split('/');
     currentMonth = parseInt(month) - 1; // JavaScript months are 0-11
@@ -640,10 +634,12 @@ async function generateCalendar(dateValue) {
     });
     calendar.appendChild(headerRow);
 
-    var rankData = await fetchRankData(currentMonth + 1, currentYear);
-    console.log(rankData); // Debug: Log rank data
-    var previousRank = null;
+    // Fetch rank data from the server
+    var rankData = await fetch(`/get_rank_data/{{ student.id }}/${parseInt(month)}/${parseInt(year)}`)
+        .then(response => response.json());
+    console.log(rankData);
 
+    var previousRank = null;
     var currentDay = 1;
     for (var row = 0; row < 6; row++) {
         var tr = document.createElement('tr');
@@ -655,7 +651,6 @@ async function generateCalendar(dateValue) {
                 td.textContent = currentDay;
 
                 var currentRank = rankData[currentDay];
-                console.log(`Day: ${currentDay}, Current Rank: ${currentRank}, Previous Rank: ${previousRank}`); // Debug: Log rank comparison
                 if (previousRank !== null && currentRank !== undefined) {
                     if (currentRank < previousRank) {
                         td.style.backgroundColor = "green";
@@ -712,5 +707,4 @@ function getMonthName(month) {
     return months[month];
 }
 </script>
-
 {% endblock %}

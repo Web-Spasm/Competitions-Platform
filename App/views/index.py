@@ -223,13 +223,20 @@ def student_profile_by_name(name):
 
     return render_template('student_profile.html', student=student, competitions=competitions, user=current_user, ranks=ranks)
 
-@index_views.route('/api/rankings', methods=['GET'])
-def get_rankings():
-    month = request.args.get('month')
-    year = request.args.get('year')
-    rankings = get_rankings_for_month_year(month, year)
-    print("Rankings: ", rankings)
-    return jsonify(rankings)
+@index_views.route('/get_rank_data//<int:student_id>/<int:month>/<int:year>', methods=['GET'])
+def get_rank_data(student_id, month, year):
+    print(f"Fetching rank data for student_id: {student_id}, month: {month}, year: {year}")
+    ranking_history = get_ranking_history_by_id(student_id)
+    rank_data = {}
+    
+    if ranking_history:
+        ranks = get_rankings_by_history_id(ranking_history.id)
+        for rank in ranks:
+            rank_date = rank.date
+            if rank_date.month == month and rank_date.year == year:
+                rank_data[rank_date.day] = rank.rank
+    
+    return jsonify(rank_data)
 
 @index_views.route('/moderator_profile/<int:id>', methods=['GET'])
 def moderator_profile(id):   
