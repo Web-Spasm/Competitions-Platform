@@ -397,13 +397,25 @@
         transition: 0.5s;
     }
     
-    .openbutton {
-        width: 5%;
-        margin-left: auto;
+    .button-container {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
         margin-top: 2vw;
         margin-right: 2vw;
+        width: 83%;
     }
-    
+
+    .graphButton, .openbutton {
+        width: auto;
+        margin-left: 1vw; 
+    }
+
+    .icon {
+        width: 100%; 
+        cursor: pointer;
+    }
+
     .mail-icon {
         width: 75%;
         margin-left: auto;
@@ -413,6 +425,32 @@
         border-radius: 25%;
         justify-content: flex-end;
     }
+
+    .graph-icon {
+        width: 75%;
+        margin-left: auto;
+        margin-right: 2vw;
+        padding-left: auto;
+        padding-right: 0vw;
+        border-radius: 25%;
+        justify-content: flex-end;
+    }
+
+    .icon-container {
+        display: flex; 
+        align-items: center; 
+        justify-content: flex-end; 
+        gap: 1vw; 
+        margin-top: 1vw;
+    }
+
+    .icon {
+        width: 50px; 
+        height: 50px; 
+        border-radius: 25%; 
+        cursor: pointer;
+    }
+
     
     .sidepanel-header {
         display: flex;
@@ -522,11 +560,16 @@
             </ul>
         </div>
     </div>
-    {% if user.is_authenticated and user.id==student.id and session['user_type'] == 'student' %}
-    <div class="openbutton">
-        <img class="mail-icon" src="{{url_for('static', filename='mailIcon.jpg')}}" alt="Notifications" onclick="openNav()">
+    <div class="button-container">
+        <div class="graphButton">
+            <img class="icon" src="{{url_for('static', filename='graphIcon.jpg')}}" alt="View Rank Line Graph" id="openLineGraphIcon" style="cursor: pointer;">
+        </div>
+        {% if user.is_authenticated and user.id==student.id and session['user_type'] == 'student' %}
+        <div class="openbutton">
+            <img class="icon" src="{{url_for('static', filename='mailIcon.jpg')}}" alt="Notifications" onclick="openNav()">
+        </div>
+        {% endif %}
     </div>
-    {% endif %}
 </div>
 <div class="profile-info" style="font-family: helvetica;">
     <div class="student-info">
@@ -556,12 +599,13 @@
                     <input type="text" id="date" name="date" placeholder="MM/YYYY">
                     <button type="submit">Confirm</button>
                 </form>
-                <button id="openLineGraph">View Rank Line Graph</button>
             </div>
 
+            <!--Line Graph Modal-->
             <div id="lineGraphModal" class="modal">
                 <div class="modal-content">
                     <span class="close" id="closeLineGraphModal">&times;</span>
+                    <h2 style="color: white;">Rank Insights</h2>
                     <canvas id="rankLineGraph"></canvas>
                 </div>
             </div>
@@ -719,9 +763,8 @@
         return months[month];
     }
 
-   
-
-    document.getElementById('openLineGraph').addEventListener('click', async function() {
+    //Create Line Graph
+    document.getElementById('openLineGraphIcon').addEventListener('click', async function() {
     try {
         console.log("Fetching rank data...");
         var response = await fetch(`/get_rank_data/{{ student.id }}`);
@@ -808,6 +851,12 @@ document.getElementById('closeLineGraphModal').addEventListener('click', functio
     document.getElementById('lineGraphModal').style.display = 'none';
     console.log("Line graph modal closed.");
 });
+
+window.onclick = function(event) {
+    if (event.target == document.getElementById('lineGraphModal')) {
+        document.getElementById('lineGraphModal').style.display = 'none';
+    }
+}
     </script>
 
 {% endblock %}
