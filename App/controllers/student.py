@@ -109,16 +109,16 @@ def update_rankings(competition):
         
             student.curr_rank = curr_rank
             if student.prev_rank == 0:
-                message = f'RANK : {student.curr_rank}. Congratulations on your first rank!'
+                message = f'RANK : {student.curr_rank}. Congratulations on your first ran!'
                 student_ranking = ranking.create_ranking(student_history.id, competition.id, curr_rank, 'green' ,competition.date)
             elif student.curr_rank == student.prev_rank:
-                message = f'RANK : {student.curr_rank}. Well done! You retained your rank.'
+                message = f'RANK : {student.curr_rank}. Well done! You retained your rank after competition {competition.name}'
                 student_ranking = ranking.create_ranking(student_history.id, competition.id, curr_rank, 'blue' ,competition.date)
             elif student.curr_rank < student.prev_rank:
-                message = f'RANK : {student.curr_rank}. Congratulations! Your rank has went up.'
+                message = f'RANK : {student.curr_rank}. Congratulations! Your rank has went up. after competition {competition.name}'
                 student_ranking = ranking.create_ranking(student_history.id, competition.id, curr_rank,'green' ,competition.date)
             else:
-                message = f'RANK : {student.curr_rank}. Oh no! Your rank has went down.'
+                message = f'RANK : {student.curr_rank}. Oh no! Your rank has went down. due to competition {competition.name}'
                 student_ranking = ranking.create_ranking(student_history.id, competition.id, curr_rank, 'red' ,competition.date)
 
             student.prev_rank = student.curr_rank
