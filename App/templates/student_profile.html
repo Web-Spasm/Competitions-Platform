@@ -517,12 +517,16 @@
         <div class="sidepanel-content">
             <ul>
                 {% for notification in student.notifications[::-1] %}
-                    <li>
-                        <p style="font-size: smaller;">
-                            Date: {{notification.date}}
-                            {{notification.message}} 
+                <div style="width: 100%; height: 100%; justify-content: center;">
+                    <li style="height: max-content;">
+                        <p style="text-align: left; font-size: smaller; top: 0; margin: 0;">
+                            Date: {{notification.date.strftime('%d/%m/%Y')}}
+                        </p>
+                        <p style="font-size: smaller; margin: 0;">
+                            {{notification.message}}
                         </p>
                     </li>
+                </div>
                 {% endfor %}
             </ul>
         </div>
