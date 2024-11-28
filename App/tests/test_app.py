@@ -93,6 +93,8 @@ class UnitTests(unittest.TestCase):
       db.create_all()
       notification = Notification(1, "Ranking changed!")
       self.assertDictEqual(notification.get_json(), {"id": None, "student_id": 1, "notification": "Ranking changed!"})
+
+# update to include date
     """
     #Ranking Unit Tests
     def test_new_ranking(self):

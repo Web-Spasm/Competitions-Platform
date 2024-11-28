@@ -122,7 +122,7 @@ def update_rankings(competition):
                 student_ranking = ranking.create_ranking(student_history.id, competition.id, curr_rank, 'red' ,competition.date)
 
             student.prev_rank = student.curr_rank
-            notification = Notification(student.id, message)
+            notification = Notification(student.id, message, competition.date)
             student.notifications.append(notification)
 
             try:
