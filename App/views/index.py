@@ -238,6 +238,22 @@ def get_rank_data(student_id, month, year):
     
     return jsonify(rank_data)
 
+@index_views.route('/get_rank_data/<int:student_id>', methods=['GET'])
+def get_all_rank_data(student_id):
+    print(f"Fetching all rank data for student_id: {student_id}")
+    ranking_history = get_ranking_history_by_id(student_id)
+    rank_data = {}
+    rank_colors = {}
+    
+    if ranking_history:
+        ranks = get_rankings_by_history_id(ranking_history.id)
+        for rank in ranks:
+            rank_date = rank.date
+            rank_data[f"{rank_date.month}/{rank_date.day}/{rank_date.year}"] = rank.rank
+            rank_colors[f"{rank_date.month}/{rank_date.day}/{rank_date.year}"] = rank.colour
+    
+    return jsonify({'rank_data': rank_data, 'rank_colors': rank_colors})
+
 @index_views.route('/moderator_profile/<int:id>', methods=['GET'])
 def moderator_profile(id):   
     moderator = get_moderator(id)

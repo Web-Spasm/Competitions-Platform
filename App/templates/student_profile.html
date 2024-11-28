@@ -556,7 +556,18 @@
                     <input type="text" id="date" name="date" placeholder="MM/YYYY">
                     <button type="submit">Confirm</button>
                 </form>
+                <button id="openLineGraph">View Rank Line Graph</button>
             </div>
+
+            <div id="lineGraphModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" id="closeLineGraphModal">&times;</span>
+                    <canvas id="rankLineGraph"></canvas>
+                </div>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
             <!-- Calendar Modal -->
             <div id="calendarModal" class="modal">
@@ -597,6 +608,7 @@
 <script>
     let currentMonth, currentYear;
     let previousRank = null;
+    let chartInstance = null;
     
     document.getElementById('dateForm').addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent form submission
@@ -706,5 +718,96 @@
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         return months[month];
     }
+
+   
+
+    document.getElementById('openLineGraph').addEventListener('click', async function() {
+    try {
+        console.log("Fetching rank data...");
+        var response = await fetch(`/get_rank_data/{{ student.id }}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        var result = await response.json();
+        console.log("Rank data fetched:", result);
+
+        var rankData = result.rank_data;
+        var rankColors = result.rank_colors;
+
+        var labels = Object.keys(rankData);
+        var data = Object.values(rankData);
+        var colors = labels.map(label => rankColors[label]);
+
+        var ctx = document.getElementById('rankLineGraph').getContext('2d');
+
+        if (chartInstance) {
+            chartInstance.destroy();
+        }
+
+        chartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Rank',
+                    data: data,
+                    pointBackgroundColor: colors,
+                    fill: false,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        reverse: true // Ranks are usually better when lower
+                    }
+                },
+                plugins: {
+                    customLineColor: {
+                        colors: colors
+                    }
+                }
+            },
+            plugins: [{
+                id: 'customLineColor',
+                beforeDraw: chart => {
+                    const ctx = chart.ctx;
+                    const chartArea = chart.chartArea;
+                    const meta = chart.getDatasetMeta(0);
+                    const data = meta.data;
+
+                    ctx.save();
+
+                    for (let i = 0; i < data.length - 1; i++) {
+                        const point = data[i];
+                        const nextPoint = data[i + 1];
+                        const color = chart.config.options.plugins.customLineColor.colors[i];
+
+                        ctx.beginPath();
+                        ctx.moveTo(point.x, point.y);
+                        ctx.lineTo(nextPoint.x, nextPoint.y);
+                        ctx.strokeStyle = color;
+                        ctx.lineWidth = 2;
+                        ctx.stroke();
+                    }
+
+                    ctx.restore();
+                }
+            }]
+        });
+
+        document.getElementById('lineGraphModal').style.display = 'block';
+        console.log("Line graph displayed.");
+    } catch (error) {
+        console.error("Error fetching or displaying rank data:", error);
+    }
+});
+
+document.getElementById('closeLineGraphModal').addEventListener('click', function() {
+    document.getElementById('lineGraphModal').style.display = 'none';
+    console.log("Line graph modal closed.");
+});
     </script>
+
 {% endblock %}
