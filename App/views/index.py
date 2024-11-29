@@ -233,9 +233,10 @@ def get_rank_data(student_id, month, year):
         ranks = get_rankings_by_history_id(ranking_history.id)
         for rank in ranks:
             rank_date = rank.date
+           
             if rank_date.month == month and rank_date.year == year:
-                rank_data[rank_date.day] = rank.rank
-    
+                rank_data[rank_date.day] ={'rank': rank.rank, 'colour': rank.colour}
+
     return jsonify(rank_data)
 
 @index_views.route('/moderator_profile/<int:id>', methods=['GET'])

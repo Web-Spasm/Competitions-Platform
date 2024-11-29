@@ -220,22 +220,6 @@
     .calendar-navigation button:hover {
         background-color: #0056b3;
     
-        border-radius: 25px;
-        width: 25%;
-    
-        border-radius: 20px; /* Keep rounded corners */
-        width: 25%; /* Keep the original width */
-    
-        outline-style: solid;
-        margin: auto;
-        text-align: center;
-        font-size: 1.6vw; /* Keep font size proportional */
-        color: white;
-        background-color: black;
-    
-        padding: 2vw;
-    
-        padding: 1vw 2vw; /* Reduce vertical padding to make the height shorter */
     }
     
     .date-form input[type="text"] {
@@ -659,20 +643,10 @@
                 } else if (currentDay <= daysInMonth) {
                     td.textContent = currentDay;
     
-                    var currentRank = rankData[currentDay];
-                    if (previousRank !== null && currentRank !== undefined) {
-                        if (currentRank < previousRank) {
-                            td.style.backgroundColor = "green";
-                        } else if (currentRank > previousRank) {
-                            td.style.backgroundColor = "red";
-                        } else if (currentRank === previousRank) {
-                            td.style.backgroundColor = "blue";
-                        }
-                    } else if (previousRank === null && currentRank !== undefined) {
-                        td.style.backgroundColor = "green";
-                    }
-                    if (currentRank !== undefined) {
-                        previousRank = currentRank;
+                    var currentRankColour = rankData[currentDay];
+
+                    if (currentRankColour) {
+                    td.style.backgroundColor = currentRankColour.colour; 
                     }
     
                     if (currentDay === new Date().getDate() && new Date().getMonth() === currentMonth && new Date().getFullYear() === currentYear) {
