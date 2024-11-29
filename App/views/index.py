@@ -189,8 +189,16 @@ def student_profile(id):
     
     profile_info = display_student_info(student.username)
     competitions = profile_info['competitions']
+   
+    ranking_history = get_ranking_history_by_id(id)
 
-    return render_template('student_profile.html', student=student, competitions=competitions, user=current_user)
+    if ranking_history:
+        ranks = get_rankings_by_history_id(ranking_history.id)
+        if ranks:
+            for rank in ranks:
+                print(f'Rank {rank.rank} and {rank.id} and Date {rank.date}')
+
+    return render_template('student_profile.html', student=student, competitions=competitions, user=current_user, ranks=ranks)
 
 @index_views.route('/student_profile/<string:name>', methods=['GET'])
 def student_profile_by_name(name):
@@ -201,8 +209,54 @@ def student_profile_by_name(name):
     
     profile_info = display_student_info(student.username)
     competitions = profile_info['competitions']
+
+    ranking_history = get_ranking_history_by_id(student.id)
+
+    if ranking_history:
+        ranks = get_rankings_by_history_id(ranking_history.id)
+        if ranks:
+            for rank in ranks:
+                print(f'Rank {rank.rank} and {rank.id} and Date {rank.date}')
+    else:
+        print(f'Ranking history not found.')
  
-    return render_template('student_profile.html', student=student, competitions=competitions, user=current_user)
+
+    return render_template('student_profile.html', student=student, competitions=competitions, user=current_user, ranks=ranks)
+
+@index_views.route('/get_rank_data//<int:student_id>/<int:month>/<int:year>', methods=['GET'])
+def get_rank_data(student_id, month, year):
+    print(f"Fetching rank data for student_id: {student_id}, month: {month}, year: {year}")
+    ranking_history = get_ranking_history_by_id(student_id)
+    rank_data = {}
+    
+    if ranking_history:
+        ranks = get_rankings_by_history_id(ranking_history.id)
+        for rank in ranks:
+            rank_date = rank.date
+           
+            if rank_date.month == month and rank_date.year == year:
+                rank_data[rank_date.day] ={'rank': rank.rank, 'colour': rank.colour}
+
+    return jsonify(rank_data)
+
+@index_views.route('/get_rank_data/<int:student_id>', methods=['GET'])
+def get_all_rank_data(student_id):
+    print(f"Fetching all rank data for student_id: {student_id}")
+    ranking_history = get_ranking_history_by_id(student_id)
+    rank_data = {}
+    rank_colors = {}
+    
+    if ranking_history:
+        ranks = get_rankings_by_history_id(ranking_history.id)
+        sorted_ranks = sorted(ranks, key= lambda x:x.date)
+        for rank in sorted_ranks:
+            rank_date = rank.date
+            rank_data[f"{rank_date.month}/{rank_date.day}/{rank_date.year}"] = rank.rank
+            rank_colors[f"{rank_date.month}/{rank_date.day}/{rank_date.year}"] = rank.colour
+    print("Sorted Ranks:")
+    for rank in sorted_ranks:
+        print(f"Date: {rank.date}, Rank: {rank.rank}, Color: {rank.colour}")
+    return jsonify({'rank_data': rank_data, 'rank_colors': rank_colors})
 
 @index_views.route('/moderator_profile/<int:id>', methods=['GET'])
 def moderator_profile(id):   

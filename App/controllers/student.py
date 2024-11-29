@@ -31,6 +31,7 @@ def get_student(id):
 def get_all_students():
     return Student.query.all()
 
+
 def get_all_students_json():
     students = Student.query.all()
     if not students:
@@ -88,6 +89,13 @@ def display_notifications(username):
 def update_rankings(competition):
     students = get_all_students()
     
+    #for unranked students
+    for student in students:
+        student_history = ranking_history.get_ranking_history_by_id(student.id)
+
+        if student.curr_rank == 0:
+            student_ranking = ranking.create_ranking(student_history.id, competition.id, 0 , 'gray' ,competition.date)
+    
     students.sort(key=lambda x: (x.rating_score, x.comp_count), reverse=True)
 
     leaderboard = []
@@ -108,21 +116,22 @@ def update_rankings(competition):
             count += 1
         
             student.curr_rank = curr_rank
+
             if student.prev_rank == 0:
-                message = f'RANK : {student.curr_rank}. Congratulations on your first rank!'
+                message = f'RANK : {student.curr_rank}. Congratulations on your first ran!'
                 student_ranking = ranking.create_ranking(student_history.id, competition.id, curr_rank, 'green' ,competition.date)
             elif student.curr_rank == student.prev_rank:
-                message = f'RANK : {student.curr_rank}. Well done! You retained your rank.'
+                message = f'RANK : {student.curr_rank}. Well done! You retained your rank after competition {competition.name}'
                 student_ranking = ranking.create_ranking(student_history.id, competition.id, curr_rank, 'blue' ,competition.date)
             elif student.curr_rank < student.prev_rank:
-                message = f'RANK : {student.curr_rank}. Congratulations! Your rank has went up.'
+                message = f'RANK : {student.curr_rank}. Congratulations! Your rank has went up after competition {competition.name}'
                 student_ranking = ranking.create_ranking(student_history.id, competition.id, curr_rank,'green' ,competition.date)
             else:
-                message = f'RANK : {student.curr_rank}. Oh no! Your rank has went down.'
+                message = f'RANK : {student.curr_rank}. Oh no! Your rank has went down due to competition {competition.name}'
                 student_ranking = ranking.create_ranking(student_history.id, competition.id, curr_rank, 'red' ,competition.date)
 
             student.prev_rank = student.curr_rank
-            notification = Notification(student.id, message)
+            notification = Notification(student.id, message, competition.date)
             student.notifications.append(notification)
 
             try:

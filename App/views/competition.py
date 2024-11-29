@@ -171,7 +171,7 @@ def confirm_results(comp_name):
         moderator = Moderator.query.filter_by(id=current_user.id).first()
     else:
         moderator = None
-    
+
     competition = get_competition_by_name(comp_name)
 
     if update_ratings(moderator.username, competition.name):

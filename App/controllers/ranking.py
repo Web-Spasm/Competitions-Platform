@@ -44,6 +44,14 @@ def get_rankings_by_id_json(ranking_id):
         return None
     return ranking.get_json()
 
+def get_rankings_for_month_year(month, year):
+    rankings = Ranking.query.filter(
+        db.extract('month', Ranking.date) == month,
+        db.extract('year', Ranking.date) == year
+    ).all()
+    rank_data = {ranking.date.day: ranking.rank for ranking in rankings}
+    return rank_data
+
 def update_ranking(ranking_id, ranking_history_id, competition_id, rank, colour,  date):
     ranking = Ranking.query.get(ranking_id)
     if not ranking:
