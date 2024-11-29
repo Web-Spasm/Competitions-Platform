@@ -7,7 +7,7 @@ def create_ranking_history(student_id, date):
     if not student:
         print(f'Student with ID: {student_id} not found!')
         return None
-    new_ranking_history = RankingHistory(student_id=student_id, date=datetime.strptime(date, "%d-%m-%Y"))
+    new_ranking_history = RankingHistory(student_id=student_id, date=date)
     try:
         db.session.add(new_ranking_history)
         db.session.commit()
