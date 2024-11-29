@@ -775,11 +775,12 @@
         console.log("Rank data fetched:", result);
 
         var rankData = result.rank_data;
+        var sortedRankData = Object.entries(rankData).sort((a, b) => new Date(a[0]) - new Date(b[0]));
         var rankColors = result.rank_colors;
 
-        var labels = Object.keys(rankData);
-        var data = Object.values(rankData);
-        var colors = labels.map(label => rankColors[label]);
+        var labels = sortedRankData.map(entry => entry[0]);
+        var data = sortedRankData.map(entry => entry[1]);
+        var colors = labels.map(label => rankColors[label])
 
         var ctx = document.getElementById('rankLineGraph').getContext('2d');
 
