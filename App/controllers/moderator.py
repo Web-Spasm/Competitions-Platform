@@ -130,7 +130,7 @@ def add_results(mod_name, comp_name, team_name, score):
                         return comp_team
                     except Exception as e:
                         db.session.rollback()
-                        # print("Something went wrong: ", e)
+                        print(f"Something went wrong: {e}")
                         return None
     return None
 
@@ -169,7 +169,10 @@ def update_ratings(mod_name, comp_name):
                     db.session.commit()
                 except Exception as e:
                     db.session.rollback()
+                    print(f"Something went wrong: {e}")
 
         comp.confirm = True
+        db.session.add(comp)
+        db.session.commit()
         print("Results finalized!")
         return True
