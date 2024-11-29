@@ -130,7 +130,7 @@ def add_results(mod_name, comp_name, team_name, score):
                         return comp_team
                     except Exception as e:
                         db.session.rollback()
-                        # print("Something went wrong: ", e)
+                        ("Something went wrong: ", e)
                         return None
     return None
 
