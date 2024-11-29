@@ -168,6 +168,7 @@ def update_ratings(mod_name, comp_name):
                     db.session.add(stud)
                     db.session.commit()
                 except Exception as e:
+                    print("Something went wrong!", {e})
                     db.session.rollback()
 
         comp.confirm = True
