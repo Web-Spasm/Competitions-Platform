@@ -117,6 +117,7 @@ def logout():
 def signup():
     if request.method == 'POST':
         student = create_student(request.form['username'], request.form['password'])
+        ranking_history = create_ranking_history(student.id, date.today())
         
         if student:
             #flash('Username not available!', category="error")
