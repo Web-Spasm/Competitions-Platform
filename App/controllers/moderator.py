@@ -107,8 +107,17 @@ def add_results(mod_name, comp_name, team_name, score):
                                 ranking_history = RankingHistory(student_id=student.id, date=comp.date)
                                 db.session.add(ranking_history)
                                 db.session.commit()
-        
-                            ranking = Ranking(ranking_history_id=ranking_history.id, competition_id=comp.id, rank=comp_team.points_earned)
+
+                            if student.curr_rank == 0:
+                                student.curr_rank = comp_team.points_earned
+                                student.prev_rank = comp_team.points_earned
+                                colour = "gray"
+                            else:
+                                student.prev_rank = student.curr_rank
+                                student.curr_rank = comp_team.points_earned
+                                colour = "green" if student.curr_rank < student.prev_rank else "red"
+
+                            ranking = Ranking(ranking_history_id=ranking_history.id, competition_id=comp.id, rank=comp_team.points_earned, colour=colour, date=comp.date)
                             db.session.add(ranking)
                             db.session.commit()
 
