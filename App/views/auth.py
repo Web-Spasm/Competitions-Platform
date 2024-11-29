@@ -117,16 +117,18 @@ def logout():
 def signup():
     if request.method == 'POST':
         student = create_student(request.form['username'], request.form['password'])
-        
+        ranking_history = create_ranking_history(student.id, date.today().strftime("%d-%m-%Y"))
         
         if student:
             #flash('Username not available!', category="error")
             #return jsonify({'message': 'Username already used!'})
-            ranking_history = create_ranking_history(student.id, date.today())
             if request.form['username'] == student.username:
             #flash('Account created successfully!', category="success")
                 login_user(student)
                 session['user_type'] = 'student'
                 return render_template('leaderboard.html', leaderboard=display_rankings(), user=current_user)#, competitions=get_all_competitions())
+    
+    return render_template('signup.html', user=current_user)
+
     
     return render_template('signup.html', user=current_user)

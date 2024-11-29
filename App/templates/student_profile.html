@@ -702,12 +702,9 @@
                     var currentRankColour = rankData[currentDay];
 
                     if (currentRankColour) {
-                    td.style.backgroundColor = currentRankColour.colour; 
+                        td.style.backgroundColor = currentRankColour.colour; 
                     }
     
-                    if (currentDay === new Date().getDate() && new Date().getMonth() === currentMonth && new Date().getFullYear() === currentYear) {
-                        td.classList.add('current-day');
-                    }
                     currentDay++;
                 }
                 tr.appendChild(td);
@@ -841,6 +838,6 @@ window.onclick = function(event) {
         document.getElementById('lineGraphModal').style.display = 'none';
     }
 }
-    </script>
+</script>
 
 {% endblock %}

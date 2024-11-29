@@ -204,19 +204,23 @@ def student_profile_by_name(name):
 
     return render_template('student_profile.html', student=student, competitions=competitions, user=current_user)
 
-@index_views.route('/get_rank_data//<int:student_id>/<int:month>/<int:year>', methods=['GET'])
+@index_views.route('/get_rank_data/<int:student_id>/<int:month>/<int:year>', methods=['GET'])
 def get_rank_data(student_id, month, year):
     print(f"Fetching rank data for student_id: {student_id}, month: {month}, year: {year}")
     ranking_history = get_ranking_history_by_id(student_id)
     rank_data = {}
-    
+
     if ranking_history:
         ranks = get_rankings_by_history_id(ranking_history.id)
-        for rank in ranks:
-            rank_date = rank.date
-           
-            if rank_date.month == month and rank_date.year == year:
-                rank_data[rank_date.day] ={'rank': rank.rank, 'colour': rank.colour}
+        if ranks:
+            for rank in ranks:
+                rank_date = rank.date
+                if rank_date.month == month and rank_date.year == year:
+                    rank_data[rank_date.day] = {'rank': rank.rank, 'colour': rank.colour}
+        else:
+            print(f"Rankings for {student_id} not found.")
+    else:
+        print(f"Ranking history for {student_id} not found.")
 
     return jsonify(rank_data)
 
@@ -226,17 +230,23 @@ def get_all_rank_data(student_id):
     ranking_history = get_ranking_history_by_id(student_id)
     rank_data = {}
     rank_colors = {}
-    
+
     if ranking_history:
         ranks = get_rankings_by_history_id(ranking_history.id)
-        sorted_ranks = sorted(ranks, key= lambda x:x.date)
-        for rank in sorted_ranks:
-            rank_date = rank.date
-            rank_data[f"{rank_date.month}/{rank_date.day}/{rank_date.year}"] = rank.rank
-            rank_colors[f"{rank_date.month}/{rank_date.day}/{rank_date.year}"] = rank.colour
-    print("Sorted Ranks:")
-    for rank in sorted_ranks:
-        print(f"Date: {rank.date}, Rank: {rank.rank}, Color: {rank.colour}")
+        if ranks:
+            sorted_ranks = sorted(ranks, key=lambda x: x.date)
+            for rank in sorted_ranks:
+                rank_date = rank.date
+                rank_data[f"{rank_date.month}/{rank_date.day}/{rank_date.year}"] = rank.rank
+                rank_colors[f"{rank_date.month}/{rank_date.day}/{rank_date.year}"] = rank.colour
+            print("Sorted Ranks:")
+            for rank in sorted_ranks:
+                print(f"Date: {rank.date}, Rank: {rank.rank}, Color: {rank.colour}")
+        else:
+            print(f"Rankings for {student_id} not found.")
+    else:
+        print(f"Ranking history for {student_id} not found.")
+
     return jsonify({'rank_data': rank_data, 'rank_colors': rank_colors})
 
 @index_views.route('/moderator_profile/<int:id>', methods=['GET'])
