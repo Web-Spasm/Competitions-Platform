@@ -220,22 +220,6 @@
     .calendar-navigation button:hover {
         background-color: #0056b3;
     
-        border-radius: 25px;
-        width: 25%;
-    
-        border-radius: 20px; /* Keep rounded corners */
-        width: 25%; /* Keep the original width */
-    
-        outline-style: solid;
-        margin: auto;
-        text-align: center;
-        font-size: 1.6vw; /* Keep font size proportional */
-        color: white;
-        background-color: black;
-    
-        padding: 2vw;
-    
-        padding: 1vw 2vw; /* Reduce vertical padding to make the height shorter */
     }
     
     .date-form input[type="text"] {
@@ -555,7 +539,16 @@
         <div class="sidepanel-content">
             <ul>
                 {% for notification in student.notifications[::-1] %}
-                    <li>{{ notification.message }}</li>
+                <div style="width: 100%; height: 100%; justify-content: center;">
+                    <li style="height: max-content;">
+                        <p style="text-align: left; font-size: smaller; top: 0; margin: 0;">
+                            Date: {{notification.date.strftime('%d/%m/%Y')}}
+                        </p>
+                        <p style="font-size: smaller; margin: 0;">
+                            {{notification.message}}
+                        </p>
+                    </li>
+                </div>
                 {% endfor %}
             </ul>
         </div>
@@ -706,20 +699,10 @@
                 } else if (currentDay <= daysInMonth) {
                     td.textContent = currentDay;
     
-                    var currentRank = rankData[currentDay];
-                    if (previousRank !== null && currentRank !== undefined) {
-                        if (currentRank < previousRank) {
-                            td.style.backgroundColor = "green";
-                        } else if (currentRank > previousRank) {
-                            td.style.backgroundColor = "red";
-                        } else if (currentRank === previousRank) {
-                            td.style.backgroundColor = "blue";
-                        }
-                    } else if (previousRank === null && currentRank !== undefined) {
-                        td.style.backgroundColor = "green";
-                    }
-                    if (currentRank !== undefined) {
-                        previousRank = currentRank;
+                    var currentRankColour = rankData[currentDay];
+
+                    if (currentRankColour) {
+                    td.style.backgroundColor = currentRankColour.colour; 
                     }
     
                     if (currentDay === new Date().getDate() && new Date().getMonth() === currentMonth && new Date().getFullYear() === currentYear) {
