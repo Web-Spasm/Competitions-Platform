@@ -2,6 +2,7 @@ from datetime import date
 from App.database import db
 from App.models import Student, Competition, Notification, CompetitionTeam
 from App.controllers import ranking, ranking_history
+from App.models.ranking_history import RankingHistory
 
 def create_student(username, password):
     student = get_student_by_username(username)
@@ -92,6 +93,11 @@ def update_rankings(competition):
     #for unranked students
     for student in students:
         student_history = ranking_history.get_ranking_history_by_id(student.id)
+
+        if not student_history:
+            student_history = RankingHistory(student_id=student.id, date=competition.date)
+            db.session.add(student_history)
+            db.session.commit()
 
         if student.curr_rank == 0:
             student_ranking = ranking.create_ranking(student_history.id, competition.id, 0 , 'gray' ,competition.date)
