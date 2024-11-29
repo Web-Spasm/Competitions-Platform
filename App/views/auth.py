@@ -129,3 +129,6 @@ def signup():
                 return render_template('leaderboard.html', leaderboard=display_rankings(), user=current_user)#, competitions=get_all_competitions())
     
     return render_template('signup.html', user=current_user)
+
+    
+    return render_template('signup.html', user=current_user)
