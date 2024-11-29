@@ -760,7 +760,12 @@
 
         var labels = sortedRankData.map(entry => entry[0]);
         var data = sortedRankData.map(entry => entry[1]);
-        var colors = labels.map(label => rankColors[label])
+        var colors = labels.map(label => rankColors[label]);
+
+        // Filter out leading zero ranks
+        var filteredData = data.filter(rank => rank !== 0);
+        var filteredLabels = labels.slice(data.length - filteredData.length);
+        var filteredColors = colors.slice(data.length - filteredData.length);
 
         var ctx = document.getElementById('rankLineGraph').getContext('2d');
 
@@ -771,11 +776,11 @@
         chartInstance = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: labels,
+                labels: filteredLabels,
                 datasets: [{
                     label: 'Rank',
-                    data: data,
-                    pointBackgroundColor: colors,
+                    data: filteredData,
+                    pointBackgroundColor: filteredColors,
                     fill: false,
                     borderWidth: 2
                 }]
@@ -784,12 +789,12 @@
                 scales: {
                     y: {
                         beginAtZero: true,
-                        reverse: true // Ranks are usually better when lower
+                        reverse: true 
                     }
                 },
                 plugins: {
                     customLineColor: {
-                        colors: colors
+                        colors: filteredColors
                     }
                 }
             },
