@@ -427,7 +427,7 @@ class StudentIntegrationTests(unittest.TestCase):
         comp_team4 = add_results(mod.username, comp2.name, "Scrum Lords", 10)
         update_ratings(mod.username, comp2.name)
         update_rankings(comp2)
-        self.assertDictEqual(display_notifications("steven"), {"notifications": [{"ID": 2, "Notification": "RANK : 1. Congratulations on your first rank!"}, {"ID": 10, "Notification": "RANK : 4. Oh no! Your rank has went down."}]})
+        self.assertDictEqual(display_notifications("steven"), {"notifications": [{"ID": 2, "Notification": "RANK : 1. Congratulations on your first rank!"}, {"ID": 10, "Notification": "RANK : 4. Oh no! Your rank has went down due to competition Hacker Cup"}]})
 
 
     def test4_display_notification(self):
@@ -458,7 +458,7 @@ class StudentIntegrationTests(unittest.TestCase):
         comp_team4 = add_results(mod.username, comp2.name, "Scrum Lords", 10)
         update_ratings(mod.username, comp2.name)
         update_rankings(comp2)
-        self.assertDictEqual(display_notifications("mark"), {"notifications": [{"ID": 4, "Notification": "RANK : 4. Congratulations on your first rank!"}, {"ID": 8, "Notification": "RANK : 2. Congratulations! Your rank has went up."}]})
+        self.assertDictEqual(display_notifications("mark"), {"notifications": [{"ID": 4, "Notification": "RANK : 4. Congratulations on your first rank!"}, {"ID": 8, "Notification": "RANK : 2. Congratulations! Your rank has went up after competition Hacker Cup"}]})
 
    
     #Feature 5 Integration Tests
