@@ -124,7 +124,7 @@ def update_rankings(competition):
             student.curr_rank = curr_rank
 
             if student.prev_rank == 0:
-                message = f'RANK : {student.curr_rank}. Congratulations on your first ran!'
+                message = f'RANK : {student.curr_rank}. Congratulations on your first rank!'
                 student_ranking = ranking.create_ranking(student_history.id, competition.id, curr_rank, 'green' ,competition.date)
             elif student.curr_rank == student.prev_rank:
                 message = f'RANK : {student.curr_rank}. Well done! You retained your rank after competition {competition.name}'
