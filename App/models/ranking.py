@@ -12,7 +12,7 @@ class Ranking(db.Model):
     colour = db.Column(db.String(120), nullable=False)
     date = db.Column(db.DateTime, default= datetime.utcnow)
 
-    def __init__(self, ranking_history_id, competition_id, rank, colour, date=None):
+    def __init__(self, ranking_history_id, competition_id, rank, colour, date):
         self.ranking_history_id = ranking_history_id
         self.competition_id = competition_id
         self.rank = rank
