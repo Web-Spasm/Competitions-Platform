@@ -23,7 +23,7 @@ def create_ranking(ranking_history_id, competition_id, rank, colour, date):
         return None
 
 def get_ranking_by_id(ranking_id):
-    ranking = Ranking.query.get(ranking_id).first()
+    ranking = Ranking.query.get(ranking_id)
     if not ranking:
         print(f'Ranking with ID: {ranking_id} not found!')
         return None
@@ -38,19 +38,11 @@ def get_rankings_by_history_id(ranking_history_id):
     return None 
 
 def get_rankings_by_id_json(ranking_id):
-    ranking = Ranking.query.get(ranking_id).first()
+    ranking = Ranking.query.get(ranking_id)
     if not ranking:
         print(f'Ranking with ID: {ranking_id} not found!')
         return None
     return ranking.get_json()
-
-def get_rankings_for_month_year(month, year):
-    rankings = Ranking.query.filter(
-        db.extract('month', Ranking.date) == month,
-        db.extract('year', Ranking.date) == year
-    ).all()
-    rank_data = {ranking.date.day: ranking.rank for ranking in rankings}
-    return rank_data
 
 def update_ranking(ranking_id, ranking_history_id, competition_id, rank, colour,  date):
     ranking = Ranking.query.get(ranking_id)
