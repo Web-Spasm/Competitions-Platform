@@ -203,7 +203,13 @@ class UnitTests(unittest.TestCase):
 #     user = User("james", "jamespass")
 #     assert login("james", "jamespass") != None
 
-
+@pytest.fixture(autouse=True, scope="module")
+def empty_db():
+    app = create_app({'TESTING': True, 'SQLALCHEMY_DATABASE_URI': 'sqlite:///test.db'})
+    create_db()
+    yield app.test_client()
+    db.drop_all()
+    
 class CompetitionIntegrationTests(unittest.TestCase):
     def setUp(self):
         db.create_all()
