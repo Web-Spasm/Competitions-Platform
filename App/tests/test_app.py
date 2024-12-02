@@ -199,9 +199,7 @@ class UnitTests(unittest.TestCase):
 #     db.drop_all()
 
 
-# def test_authenticate():
-#     user = User("james", "jamespass")
-#     assert login("james", "jamespass") != None
+
 
 @pytest.fixture(autouse=True, scope="module")
 def empty_db():
@@ -209,7 +207,12 @@ def empty_db():
     create_db()
     yield app.test_client()
     db.drop_all()
-    
+
+
+# def test_authenticate():
+#     mod = create_moderator("debra", "debrapass")
+#     assert login("debra", "debrapass") is not None
+
 class CompetitionIntegrationTests(unittest.TestCase):
     def setUp(self):
         db.create_all()
