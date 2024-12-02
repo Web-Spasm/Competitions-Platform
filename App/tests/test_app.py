@@ -42,6 +42,33 @@ class UnitTests(unittest.TestCase):
       student = Student("james", "jamespass")
       self.assertDictEqual(student.get_json(), {"id": None, "username": "james", "rating_score": 0, "comp_count": 0, "curr_rank": 0})
 
+    #RankingHistory Unit Tests
+    def test_ranking_history(self):
+      db.drop_all()
+      db.create_all()
+      ranking_history = RankingHistory(1,date.today())
+      assert ranking_history.student_id == 1  and ranking_history.date == date.today()
+
+    def test_ranking_history_get_json(self):
+      db.drop_all()
+      db.create_all()
+      ranking_history = RankingHistory(1,date.today())
+      self.assertDictEqual(ranking_history.get_json(), {"id": None, "student_id":1, "date":date.today()})
+
+    #Ranking Unit Tests
+    def test_ranking(self):
+      db.drop_all()
+      db.create_all()
+      ranking = Ranking(1,1,4,'blue',date.today())
+      assert ranking.ranking_history_id==1 and ranking.competition_id==1 and ranking.rank == 4 and ranking.colour =='blue'and ranking.date == date.today()
+
+    def test_ranking_get_json(self):
+      db.drop_all()
+      db.create_all()
+      ranking = Ranking(1,1,4,'blue',date.today())
+      self.assertDictEqual(ranking.get_json(), {"id": None, "ranking_history_id": 1, "competition_id": 1, "rank": 4, "colour": 'blue', "date": date.today()})
+    
+
     #Moderator Unit Tests
     def test_new_moderator(self):
       db.drop_all()
@@ -82,17 +109,18 @@ class UnitTests(unittest.TestCase):
       self.assertDictEqual(competition.get_json(), {"id": None, "name": "RunTime", "date": "09-02-2024", "location": "St. Augustine", "level": 1, "max_score": 25, "moderators": [], "teams": []})
     
     #Notification Unit Tests
-    # def test_new_notification(self):
-    #   db.drop_all()
-    #   db.create_all()
-    #   notification = Notification(1, "Ranking changed!")
-    #   assert notification.student_id == 1 and notification.message == "Ranking changed!"
+    def test_new_notification(self):
+      db.drop_all()
+      db.create_all()
+      
+      notification = Notification(1, "Ranking changed!", None)
+      assert notification.student_id == 1 and notification.message == "Ranking changed!"
 
-    # def test_notification_get_json(self):
-    #   db.drop_all()
-    #   db.create_all()
-    #   notification = Notification(1, "Ranking changed!")
-    #   self.assertDictEqual(notification.get_json(), {"id": None, "student_id": 1, "notification": "Ranking changed!"})
+    def test_notification_get_json(self):
+      db.drop_all()
+      db.create_all()
+      notification = Notification(1, "Ranking changed!", None)
+      self.assertDictEqual(notification.get_json(), {"id": None, "student_id": 1, "notification": "Ranking changed!", "date": None})
 
 # update to include date
     """
