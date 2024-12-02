@@ -70,13 +70,13 @@ def add_mod(mod1_name, comp_name, mod2_name):
     else:
         return comp.add_mod(mod2)
     
-def calculate_competition_team_scores(score, max_score, level, factor=100):
+def calculate_competition_team_scores(score, max_score, level, factor=10):
     normalized_score = score / max_score
-    weighted_score = normalized_score * level * factor  
+    weighted_score = normalized_score * level * factor
     return score, weighted_score
 
-def update_student_rating(current_rating, comp_count, new_weighted_score):
-    return (current_rating * comp_count + new_weighted_score)/(comp_count + 1)
+def update_student_rating(current_rating, new_weighted_score):
+    return (current_rating + new_weighted_score)
                 
 def add_results(mod_name, comp_name, team_name, score):
     mod = Moderator.query.filter_by(username=mod_name).first()
@@ -122,7 +122,7 @@ def add_results(mod_name, comp_name, team_name, score):
                             db.session.add(ranking)
                             db.session.commit()
 
-                            student.rating_score = update_student_rating(student.rating_score, student.comp_count, individual_score)
+                            student.rating_score = update_student_rating(student.rating_score, individual_score)
                             student.comp_count += 1
                             db.session.add(student)
                             db.session.commit()
@@ -130,7 +130,7 @@ def add_results(mod_name, comp_name, team_name, score):
                         return comp_team
                     except Exception as e:
                         db.session.rollback()
-                        ("Something went wrong: ", e)
+                        print(f"Something went wrong: {e}")
                         return None
     return None
 
@@ -162,7 +162,7 @@ def update_ratings(mod_name, comp_name):
 
             for stud in team.students:
                 weighted_score = comp_team.rating_score / len(team.students)  # Normalize by team size
-                stud.rating_score = update_student_rating(stud.rating_score, stud.comp_count, weighted_score)
+                stud.rating_score = update_student_rating(stud.rating_score, weighted_score)
                 stud.comp_count += 1
                 try:
                     db.session.add(stud)
@@ -170,7 +170,10 @@ def update_ratings(mod_name, comp_name):
                 except Exception as e:
                     print("Something went wrong!", {e})
                     db.session.rollback()
+                    print(f"Something went wrong: {e}")
 
         comp.confirm = True
+        db.session.add(comp)
+        db.session.commit()
         print("Results finalized!")
         return True
