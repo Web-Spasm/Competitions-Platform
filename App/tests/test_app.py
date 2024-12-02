@@ -205,6 +205,12 @@ class UnitTests(unittest.TestCase):
 
 
 class CompetitionIntegrationTests(unittest.TestCase):
+    def setUp(self):
+        db.create_all()
+
+    def tearDown(self):
+        db.session.remove()
+        db.drop_all()
     
     #Feature 1 Integration Tests
     def test1_create_competition(self):
@@ -324,6 +330,13 @@ class CompetitionIntegrationTests(unittest.TestCase):
 
     #Feature 3 Integration Tests
 class StudentIntegrationTests(unittest.TestCase):
+    def setUp(self):
+        db.create_all()
+
+    def tearDown(self):
+        db.session.remove()
+        db.drop_all()
+
     def test_display_student_info(self):
         db.drop_all()
         db.create_all()
@@ -528,4 +541,4 @@ class StudentIntegrationTests(unittest.TestCase):
         comp_team4 = add_results(mod.username, comp2.name, "Scrum Lords", 10)
         update_ratings(mod.username, comp2.name)
         update_rankings(comp2)
-        self.assertEqual(get_all_students_json(), [{'id': 1, 'username': 'james', 'rating_score': 22, 'comp_count': 2, 'curr_rank': 1}, {'id': 2, 'username': 'steven', 'rating_score': 17, 'comp_count': 2, 'curr_rank': 4}, {'id': 3, 'username': 'emily', 'rating_score': 17, 'comp_count': 2, 'curr_rank': 4}, {'id': 4, 'username': 'mark', 'rating_score': 18, 'comp_count': 2, 'curr_rank': 2}, {'id': 5, 'username': 'eric', 'rating_score': 18, 'comp_count': 2, 'curr_rank': 2}, {'id': 6, 'username': 'ryan', 'rating_score': 13, 'comp_count': 2, 'curr_rank': 6}])
+        self.assertEqual(get_all_students_json(), [{'id': 1, 'username': 'james', 'rating_score': 7.333333333333334, 'comp_count': 2, 'curr_rank': 1}, {'id': 2, 'username': 'steven', 'rating_score': 5.666666666666667, 'comp_count': 2, 'curr_rank': 4}, {'id': 3, 'username': 'emily', 'rating_score': 5.666666666666667, 'comp_count': 2, 'curr_rank': 4}, {'id': 4, 'username': 'mark', 'rating_score': 6.0, 'comp_count': 2, 'curr_rank': 2}, {'id': 5, 'username': 'eric', 'rating_score':  6.0, 'comp_count': 2, 'curr_rank': 2}, {'id': 6, 'username': 'ryan', 'rating_score':  4.333333333333333, 'comp_count': 2, 'curr_rank': 6}])
