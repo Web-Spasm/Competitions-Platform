@@ -324,7 +324,6 @@ class CompetitionIntegrationTests(unittest.TestCase):
 
     #Feature 3 Integration Tests
 class StudentIntegrationTests(unittest.TestCase):
-    
     def test_display_student_info(self):
         db.drop_all()
         db.create_all()

@@ -2,12 +2,34 @@ from App.database import db
 from App.models import Competition, Moderator, CompetitionTeam, Team, Student#, Student, Admin, competition_student
 from datetime import datetime
 
+# def create_competition(mod_name, comp_name, date, location, level, max_score):
+#     comp = get_competition_by_name(comp_name)
+#     if comp:
+#         print(f'{comp_name} already exists!')
+#         return None
+    
+#     mod = Moderator.query.filter_by(username=mod_name).first()
+#     if mod:
+#         newComp = Competition(name=comp_name, date=datetime.strptime(date, "%d-%m-%Y"), location=location, level=level, max_score=max_score)
+#         try:
+#             newComp.add_mod(mod)
+#             db.session.add(newComp)
+#             db.session.commit()
+#             print(f'New Competition: {comp_name} created!')
+#             return newComp
+#         except Exception as e:
+#             db.session.rollback()
+#             print("Something went wrong!")
+#             return None
+#     else:
+#         print("Invalid credentials!")
+
 def create_competition(mod_name, comp_name, date, location, level, max_score):
     comp = get_competition_by_name(comp_name)
     if comp:
         print(f'{comp_name} already exists!')
         return None
-    
+
     mod = Moderator.query.filter_by(username=mod_name).first()
     if mod:
         newComp = Competition(name=comp_name, date=datetime.strptime(date, "%d-%m-%Y"), location=location, level=level, max_score=max_score)
@@ -19,10 +41,11 @@ def create_competition(mod_name, comp_name, date, location, level, max_score):
             return newComp
         except Exception as e:
             db.session.rollback()
-            print("Something went wrong!")
+            print(f"Something went wrong: {e}")
             return None
     else:
         print("Invalid credentials!")
+        return None
 
 def get_competition_by_name(name):
     return Competition.query.filter_by(name=name).first()
