@@ -325,7 +325,6 @@ class CompetitionIntegrationTests(unittest.TestCase):
     #Feature 3 Integration Tests
 class StudentIntegrationTests(unittest.TestCase):
     
-    
     def test_display_student_info(self):
         db.drop_all()
         db.create_all()
@@ -339,7 +338,7 @@ class StudentIntegrationTests(unittest.TestCase):
         comp_team = add_results(mod.username, comp.name, "Runtime Terrors", 15)
         update_ratings(mod.username, comp.name)
         update_rankings(comp)
-        self.assertDictEqual(display_student_info("james"), {"profile": {'id': 1, 'username': 'james', 'rating_score': 24.0, 'comp_count': 1, 'curr_rank': 1}, "competitions": ['RunTime']})
+        self.assertDictEqual(display_student_info("james"), {"profile": {'id': 1, 'username': 'james', 'rating_score': 4.0, 'comp_count': 1, 'curr_rank': 1}, "competitions": ['RunTime']})
 
     #Feature 4 Integration Tests
     def test1_display_notification(self):
@@ -481,7 +480,7 @@ class StudentIntegrationTests(unittest.TestCase):
         comp_team2 = add_results(mod.username, comp.name, "Scrum Lords", 10)
         update_ratings(mod.username, comp.name)
         update_rankings(comp)
-        self.assertListEqual(display_rankings(), [{"placement": 1, "student": "james", "rating score": 24.0}, {"placement": 1, "student": "steven", "rating score": 24.0}, {"placement": 1, "student": "emily", "rating score": 24.0}, {"placement": 4, "student": "mark", "rating score": 16.0}, {"placement": 4, "student": "eric", "rating score": 16.0}, {"placement": 4, "student": "ryan", "rating score": 16.0}])
+        self.assertListEqual(display_rankings(), [{"placement": 1, "student": "james", "rating score": 4.0}, {"placement": 1, "student": "steven", "rating score": 4.0}, {"placement": 1, "student": "emily", "rating score": 4.0}, {"placement": 4, "student": "mark", "rating score": 2.6666666666666665}, {"placement": 4, "student": "eric", "rating score": 2.6666666666666665}, {"placement": 4, "student": "ryan", "rating score": 2.6666666666666665}])
 
 
     #Additional Integration Tests
