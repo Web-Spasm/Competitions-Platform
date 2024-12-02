@@ -498,25 +498,25 @@ class TestRatingCalculations(unittest.TestCase):
     def test_calculate_competition_team_scores(self):
         score, weighted_score = calculate_competition_team_scores(80, 100, 1.5)
         self.assertEqual(score, 80)
-        self.assertAlmostEqual(weighted_score, 120.0, places=5)
+        self.assertAlmostEqual(weighted_score, 12.0, places=5)
 
         score, weighted_score = calculate_competition_team_scores(50, 100, 2)
         self.assertEqual(score, 50)
-        self.assertAlmostEqual(weighted_score, 100.0, places=5)
+        self.assertAlmostEqual(weighted_score, 10.0, places=5)
 
         score, weighted_score = calculate_competition_team_scores(90, 90, 1)
         self.assertEqual(score, 90)
-        self.assertAlmostEqual(weighted_score, 100.0, places=5)
+        self.assertAlmostEqual(weighted_score, 10.0, places=5)
 
     def test_update_student_rating(self):
-        new_rating = update_student_rating(80, 4, 90)
-        self.assertAlmostEqual(new_rating, 82.0, places=5)
+        new_rating = update_student_rating(80, 10)
+        self.assertAlmostEqual(new_rating, 90.0, places=5)
 
-        new_rating = update_student_rating(70, 2, 85)
-        self.assertAlmostEqual(new_rating, 75.0, places=5)
-
-        new_rating = update_student_rating(90, 1, 80)
+        new_rating = update_student_rating(70, 15)
         self.assertAlmostEqual(new_rating, 85.0, places=5)
+
+        new_rating = update_student_rating(90, 5)
+        self.assertAlmostEqual(new_rating, 95.0, places=5)
 
 
 
