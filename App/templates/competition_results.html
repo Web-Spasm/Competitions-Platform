@@ -45,7 +45,7 @@
     }
     </style>
 
-<main class="container" style="padding: 15px; background-color: #395DA0; border-radius: 25px;">
+<main class="container" style="padding: 15px; background-color: #042863; border-radius: 25px;">
     <!-- Flash messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -57,7 +57,7 @@
         {% endif %}
     {% endwith %}
     
-    <form name="addForm" class="card" method="POST" action="{{ url_for('comp_views.add_competition_results', comp_name=competition.name) }}" style="background-color: #042863; font-family: helvetica;">
+    <form name="addForm" class="card" method="POST" action="{{ url_for('comp_views.add_competition_results', comp_name=competition.name) }}" style="background-color: #395DA0; font-family: helvetica;">
         <div class="card-content">
             <span style="color: white; font-family: optima;" class="card-title">Enter competition results</span>
             <div class="input-field">
@@ -83,7 +83,7 @@
         </div>
         <div class="card-action">
             <div class="col s12">
-                <input style="background-color: #395DA0; border-radius: 25px;" type="submit" class="btn right" value="Upload Results">
+                <input style="background-color: #042863; border-radius: 25px;" type="submit" class="btn right" value="Upload Results">
             </div>
         </div>
     </form>

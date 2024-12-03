@@ -7,45 +7,51 @@
 {% block content %}
 
 <style>
-
     body {
-        background-color: #E6ECF5;
-
-    }
-
-    .center{
         margin: 0;
-        padding: 0;
-        /* font-family: monstserrat; */
-        background: linear-gradient(120dg, #2980b9, #8e44ad);
-        /* height: 100vh; */
-        overflow: hidden;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 400px;
-
+        background: linear-gradient(120deg, #395DA0, #E6ECF5);
+        font-family: Helvetica, sans-serif;
     }
 
-    .center h2{
+    .header {
+        width: 100%;
+        padding: 20px;
         text-align: center;
-        padding: 0 0 20px 0;
-        /* border-bottom: 1px solid silver; */
+        color: white;
+        font-size: 24px;
     }
 
-    .center form {
-        padding: 0 40px;
+    .center-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 60px); /* Adjust height to account for header */
+    }
+
+    .center {
+        background-color: #042863;
+        border-radius: 25px;
+        width: 400px;
+        padding: 40px;
         box-sizing: border-box;
     }
 
-    form .txt_field{
+    .center h2 {
+        text-align: center;
+        padding: 0 0 20px 0;
+        color: white;
+    }
+
+    .center form {
+        box-sizing: border-box;
+    }
+
+    form .txt_field {
         position: relative;
-        /* border-bottom: 2px solid #adadad; */
         margin: 30px 0;
     }
 
-    .txt_field input{
+    .txt_field input {
         width: 100%;
         padding: 0 5px;
         height: 40px;
@@ -53,9 +59,10 @@
         border: none;
         background: none;
         outline: none;
+        color: white;
     }
 
-    .txt_field label{
+    .txt_field label {
         position: absolute;
         top: 50%;
         left: 5px;
@@ -66,38 +73,37 @@
         transition: .5s;
     }
 
-    .txt_field span::before{
+    .txt_field span::before {
         content: '';
         position: absolute;
         top: 40px;
         left: 0;
         width: 100%;
         height: 2px;
-        /* background: #2691d9; */
     }
 
     .txt_field input:focus ~ label,
-    .txt_field input:valid ~ label{
+    .txt_field input:valid ~ label {
         top: -5px;
         color: #2691d9;
     }
 
     .txt_field input:focus ~ span::before,
-    .txt_field input:valid ~ span::before{
+    .txt_field input:valid ~ span::before {
         width: 100%;
     }
 
-    .pass{
+    .pass {
         margin: -5px 0 20px 5px;
         color: #a6a6a6;
         cursor: pointer;
     }
 
-    .pass:hover{
+    .pass:hover {
         text-decoration: underline;
     }
 
-    input[type="submit"]{
+    input[type="submit"] {
         width: 100%;
         height: 50px;
         border: 1px solid;
@@ -110,50 +116,49 @@
         outline: none;
     }
 
-    input[type="submit"]:hover{
+    input[type="submit"]:hover {
         border-color: #2691d9;
         transition: .5s;
     }
 
-    .signup_link{
+    .login_link {
         margin: 30px 0;
         text-align: center;
         font-size: 16px;
         color: #666666;
     }
 
-    .signup_link a{
+    .login_link a {
         color: #2691d9;
         text-decoration: none;
     }
 
-    .signup_link a::hover{
+    .login_link a:hover {
         text-decoration: underline;
     }
-
 </style>
 
-<div style="background-color: #042863; border-radius: 25px;" class="center">
-    <h2 style="color: white;">Sign Up</h2>
-    
-    <form action="{{ url_for('auth_views.signup') }}" method="post" style="font-family: helvetica;">
+<div class="center-container">
+    <div class="center">
+        <h2>Sign Up</h2>
         
-        <div class="txt_field">
-            <input style="color: white;" type="text" id="username" name="username" required>
-            <label style="color: white;" for="username">Username:</label>
-        </div>
+        <form action="{{ url_for('auth_views.signup') }}" method="post">
+            <div class="txt_field">
+                <input type="text" id="username" name="username" required>
+                <label for="username">Username:</label>
+            </div>
 
-        <div class="txt_field">
-            <input style="color: white;" type="password" id="password" name="password" required>
-            <label style="color: white;" for="password">Password:</label>
-        </div>
+            <div class="txt_field">
+                <input type="password" id="password" name="password" required>
+                <label for="password">Password:</label>
+            </div>
 
-        <!-- <input type="submit" class="btn black" value="Sign Up"> -->
-        <input style="background-color: #395DA0; border-radius: 25px;" type="submit" class="btn right" value="Sign Up">
-    </form>
-    
-    <div style="color: white; margin: 25px;" class="login_link">
-        Already a user? <a style="color: white; text-decoration: underline;" href="{{ url_for('auth_views.login') }}" class="login-link">Log In</a>
+            <input style="background-color: #395DA0; border-radius: 25px;" type="submit" class="btn right" value="Sign Up">
+        </form>
+
+        <div class="login_link">
+            Already a user? <a href="{{ url_for('auth_views.login') }}" class="login-link">Log In</a>
+        </div>
     </div>
 </div>
 
