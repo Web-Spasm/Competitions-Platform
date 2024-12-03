@@ -487,6 +487,10 @@ class ModeratorIntegrationTests(unittest.TestCase):
         comp.moderators.append(mod)
         db.session.commit()
 
+        # Associate the team with the competition
+        comp.teams.append(team)
+        db.session.commit()
+
         add_results("mod", "Test Competition", "Test Team", 90)
         result = update_ratings("mod", "Test Competition")
         self.assertTrue(result)
