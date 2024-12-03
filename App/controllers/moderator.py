@@ -69,7 +69,7 @@ def add_mod(mod1_name, comp_name, mod2_name):
         return None
     else:
         return comp.add_mod(mod2)
-    
+
 def calculate_competition_team_scores(score, max_score, level, factor=10):
     normalized_score = score / max_score
     weighted_score = normalized_score * level * factor
