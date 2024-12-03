@@ -75,10 +75,9 @@ def calculate_competition_team_scores(score, max_score, level, factor=10):
     weighted_score = normalized_score * level * factor
     return score, weighted_score
 
-
 def update_student_rating(current_rating, new_weighted_score):
     return (current_rating + new_weighted_score)
-
+                
 def add_results(mod_name, comp_name, team_name, score):
     mod = Moderator.query.filter_by(username=mod_name).first()
     comp = Competition.query.filter_by(name=comp_name).first()
@@ -118,12 +117,7 @@ def add_results(mod_name, comp_name, team_name, score):
                                 ranking_history = RankingHistory(student_id=student.id, date=comp.date)
                                 db.session.add(ranking_history)
                                 db.session.commit()
-                            
-                            # ranking = Ranking(ranking_history_id=ranking_history.id, competition_id=comp.id, rank=comp_team.points_earned, colour="", date="")
-                            # db.session.add(ranking)
-                            # db.session.commit()
-
-                            # student.rating_score = update_student_rating(student.rating_score, individual_score)
+                        
                             student.comp_count += 1
                             db.session.add(student)
                             db.session.commit()
@@ -131,7 +125,7 @@ def add_results(mod_name, comp_name, team_name, score):
                         return comp_team
                     except Exception as e:
                         db.session.rollback()
-                        # print("Something went wrong: ", e)
+                        print(f"Something went wrong: {e}")
                         return None
     return None
 
@@ -169,8 +163,12 @@ def update_ratings(mod_name, comp_name):
                     db.session.add(stud)
                     db.session.commit()
                 except Exception as e:
+                    print("Something went wrong!", {e})
                     db.session.rollback()
+                    print(f"Something went wrong: {e}")
 
         comp.confirm = True
+        db.session.add(comp)
+        db.session.commit()
         print("Results finalized!")
         return True
