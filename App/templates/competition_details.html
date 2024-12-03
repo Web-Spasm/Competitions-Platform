@@ -6,7 +6,13 @@
 
 {% block content %}
 
-<style>
+<!-- <style>
+
+    body {
+        background-color: #E6ECF5; /* Light blue background */
+        font-family: Arial, sans-serif;
+    }
+
     .competition-details {
         margin-top: 20px;
     }
@@ -40,17 +46,86 @@
         background-color: black;
     }
 
+</style> -->
+
+<style>
+    body {
+        background-color: #E6ECF5; 
+        font-family: Arial, sans-serif;
+    }
+
+    .competition-details {
+        margin-top: 20px;
+    }
+
+    .card {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #fff;
+        transition: box-shadow 0.3s;
+        color: black;
+    }
+
+    .card:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .teams li {
+        list-style-type: none;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #042863; 
+        color: white; 
+        font-family: Verdana, sans-serif;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .table th,
+    .table td {
+        padding: 12px 15px;
+        text-align: center;
+        border-bottom: 1px solid white;
+    }
+
+    .table th {
+        font-size: 16px;
+    }
+
+    .table td {
+        font-size: 14px;
+    }
+
+    .table tbody tr:hover {
+        background-color: #395DA0; 
+        cursor: pointer;
+    }
+
+    .table a {
+        color: white; 
+        text-decoration: none;
+    }
+
+    .table a:hover {
+        text-decoration: underline;
+    }
 </style>
+
 <div style="display: flex;">
     <div>
-        <center><h2 style="margin-left: 50px; color: white;">Competition Details</h2></center>
+        <center><h2 style="margin-left: 50px; color: #042863;">Competition Details</h2></center>
     </div>
     <div>
         {% if session['user_type'] == 'moderator' and moderator in competition.moderators and not competition.confirm %}
-        <button type="button" style="background-color: black; padding: 5px; margin-left: 50px; margin-top: 50px; width: 120px; height: 35px; border-radius: 15px; font-family: helvetica;">
+        <button type="button" style="background-color: #042863; padding: 5px; margin-left: 50px; margin-top: 50px; width: 120px; height: 35px; border-radius: 15px; font-family: helvetica;">
             <a style="color: white" href="{{ url_for('comp_views.add_results_page', comp_id=competition.id) }}">Add Results</a>
         </button>
-        <button type="button" style="background-color: black; padding: 5px; margin-left: 50px; margin-top: 50px; width: 120px; height: 35px; border-radius: 15px; font-family: helvetica;">
+        <button type="button" style="background-color: #042863; padding: 5px; margin-left: 50px; margin-top: 50px; width: 120px; height: 35px; border-radius: 15px; font-family: helvetica;">
             <a style="color: white" href="{{ url_for('comp_views.confirm_results', comp_name=competition.name) }}">Confirm Results</a>
         </button>
         {% endif %}
@@ -58,9 +133,9 @@
 </div>
 <div class="container" style="font-family: serif;">
     {% if not competition.confirm %}
-        <center> <h4 style="color: white; background-color: black; border-radius: 15px;">{{ competition.name }} Unofficial Results</h4> </center>
+        <center> <h4 style="color: white; background-color: #042863; border-radius: 15px;">{{ competition.name }} Unofficial Results</h4> </center>
     {% else %}
-        <center> <h4 style="color: white; background-color: black; border-radius: 15px;">{{ competition.name }} Official Results</h4> </center>
+        <center> <h4 style="color: white; background-color: #042863; border-radius: 15px;">{{ competition.name }} Official Results</h4> </center>
     {% endif %}
     <table class="table" style="color: white; font-family: verdana;">
         <thead>
