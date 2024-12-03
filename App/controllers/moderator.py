@@ -102,7 +102,6 @@ def add_results(mod_name, comp_name, team_name, score):
 
                 if comp_team:
                     points_earned, rating_score = calculate_competition_team_scores(score, comp.max_score, comp.level)
-                    individual_score = rating_score / len(team.students)  # Normalize by team size
                     comp_team.points_earned = points_earned
                     comp_team.rating_score = rating_score
                     try:
@@ -121,12 +120,13 @@ def add_results(mod_name, comp_name, team_name, score):
                             student.comp_count += 1
                             db.session.add(student)
                             db.session.commit()
-
-                        return comp_team
+                
+                    
                     except Exception as e:
                         db.session.rollback()
                         print(f"Something went wrong: {e}")
                         return None
+                    return comp_team
     return None
 
 
