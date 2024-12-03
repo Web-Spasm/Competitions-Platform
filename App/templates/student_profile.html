@@ -677,7 +677,7 @@
                     data: filteredData,
                     pointBackgroundColor: filteredColors,
                     fill: false,
-                    borderWidth: 2
+                    borderWidth: 0.1
                 }]
             },
             options: {
@@ -706,7 +706,7 @@
                     for (let i = 0; i < data.length - 1; i++) {
                         const point = data[i];
                         const nextPoint = data[i + 1];
-                        const color = chart.config.options.plugins.customLineColor.colors[i];
+                        const color = chart.config.options.plugins.customLineColor.colors[i+1];
 
                         ctx.beginPath();
                         ctx.moveTo(point.x, point.y);
