@@ -148,34 +148,41 @@ def add_competition_results(comp_name):
     else:
         moderator = None
         
-    #if request.method == 'POST':
     data = request.form
     
+    score = int(data['score'])
+    max_score = competition.max_score  # Get the max score for the competition
+    print(f"Score: {score}, Max Score: {max_score}")  # Debug statement
+    if score > max_score:
+        print("Score exceeds max score!")  # Debug statement
+        flash(f"Score cannot exceed {max_score}!", "error")
+        return redirect(url_for('comp_views.add_results_page', comp_id=competition.id))
+    
     students = [data['student1'], data['student2'], data['student3']]
-    response = add_team(moderator.username, comp_name, data['team_name'], students)
-
+    
+    # Only add the team if the score is within the valid range
+    response = add_results(moderator.username, comp_name, data['team_name'], score)
     if response:
-        response = add_results(moderator.username, comp_name, data['team_name'], int(data['score']))
-    #response = add_results(data['mod_name'], data['comp_name'], data['team_name'], int(data['score']))
-    #if response:
-    #    return (jsonify({'message': "Results added successfully!"}),201)
-    #return (jsonify({'error': "Error adding results!"}),500)
+        response = add_team(moderator.username, comp_name, data['team_name'], students)
+        flash("Score successfully added!", "success")
+    else:
+        flash("Error adding results!", "error")
     
     leaderboard = display_competition_results(comp_name)
 
     return render_template('competition_details.html', competition=competition, moderator=moderator, leaderboard=leaderboard, user=current_user)
-    
+
 @comp_views.route('/confirm_results/<string:comp_name>', methods=['GET', 'POST'])
 def confirm_results(comp_name):
     if session['user_type'] == 'moderator':
         moderator = Moderator.query.filter_by(id=current_user.id).first()
     else:
         moderator = None
-    
+
     competition = get_competition_by_name(comp_name)
 
     if update_ratings(moderator.username, competition.name):
-        update_rankings()
+        update_rankings(competition)
 
     leaderboard = display_competition_results(comp_name)
 

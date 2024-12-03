@@ -1,0 +1,10 @@
+# Ignore Python compiled files
+__pycache__/
+*.pyc
+
+# Ignore database file
+instance/temp-database.db
+
+# Ignore all __pycache__ directories and .pyc files in the project
+App/**/__pycache__/
+App/**/**/*.pyc
