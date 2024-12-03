@@ -161,10 +161,12 @@ def add_competition_results(comp_name):
     students = [data['student1'], data['student2'], data['student3']]
     
     # Only add the team if the score is within the valid range
-    response = add_results(moderator.username, comp_name, data['team_name'], score)
+    response = add_team(moderator.username, comp_name, data['team_name'], students)
     if response:
-        response = add_team(moderator.username, comp_name, data['team_name'], students)
+        print("response entered2.")
+        response = add_results(moderator.username, comp_name, data['team_name'], score)
         flash("Score successfully added!", "success")
+        print("response entered2.")
     else:
         flash("Error adding results!", "error")
     
