@@ -27,8 +27,6 @@ def initialize():
 
         for student in reader:
             stud = create_student(student['username'], student['password'])
-            date_created = date.today().strftime("%d-%m-%Y")
-            ranking_history = create_ranking_history(stud.id, date_created)
             #db.session.add(stud)
         #db.session.commit()
     

@@ -101,15 +101,15 @@ def update_rankings(competition):
 
         if student.curr_rank == 0:
             student_ranking = ranking.create_ranking(student_history.id, competition.id, 0 , 'gray' ,competition.date)
-    
+
     students.sort(key=lambda x: (x.rating_score, x.comp_count), reverse=True)
 
     leaderboard = []
     count = 1
-    
+
     curr_high = students[0].rating_score
     curr_rank = 1
-        
+
     for student in students:
         if curr_high != student.rating_score:
             curr_rank = count
@@ -120,11 +120,11 @@ def update_rankings(competition):
         if student.comp_count != 0:
             leaderboard.append({"placement": curr_rank, "student": student.username, "rating score":student.rating_score})
             count += 1
-        
+
             student.curr_rank = curr_rank
 
             if student.prev_rank == 0:
-                message = f'RANK : {student.curr_rank}. Congratulations on your first ran!'
+                message = f'RANK : {student.curr_rank}. Congratulations on your first rank!'
                 student_ranking = ranking.create_ranking(student_history.id, competition.id, curr_rank, 'green' ,competition.date)
             elif student.curr_rank == student.prev_rank:
                 message = f'RANK : {student.curr_rank}. Well done! You retained your rank after competition {competition.name}'

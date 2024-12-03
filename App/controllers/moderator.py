@@ -69,7 +69,7 @@ def add_mod(mod1_name, comp_name, mod2_name):
         return None
     else:
         return comp.add_mod(mod2)
-    
+
 def calculate_competition_team_scores(score, max_score, level, factor=10):
     normalized_score = score / max_score
     weighted_score = normalized_score * level * factor
@@ -117,7 +117,7 @@ def add_results(mod_name, comp_name, team_name, score):
                                 ranking_history = RankingHistory(student_id=student.id, date=comp.date)
                                 db.session.add(ranking_history)
                                 db.session.commit()
-                            
+
                             student.comp_count += 1
                             db.session.add(student)
                             db.session.commit()
@@ -163,6 +163,7 @@ def update_ratings(mod_name, comp_name):
                     db.session.add(stud)
                     db.session.commit()
                 except Exception as e:
+                    print("Something went wrong!", {e})
                     db.session.rollback()
                     print(f"Something went wrong: {e}")
 
