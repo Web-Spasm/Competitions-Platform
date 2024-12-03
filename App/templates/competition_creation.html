@@ -5,12 +5,20 @@
 {{ super() }}
 
 {% block content %}
+
+<style>
+  body {
+      background-color: #E6ECF5; 
+      font-family: Arial, sans-serif;
+  }
+</style>
+
 <center>
-  <h2 style="color: white;">Competition Registration</h2>
+  <h2 style="color: #042863;">Competition Registration</h2>
 </center>
 
-<main class="container" style="padding: 15px; background-color: black; border-radius: 25px;">
-  <form name="addForm" class="card" method="POST" action="/createcompetition" style="background-color: black; color: white;">
+<main class="container" style="padding: 15px; background-color: #395DA0; border-radius: 25px;">
+  <form name="addForm" class="card" method="POST" action="/createcompetition" style="background-color: #042863; color: white;">
     <div class="card-content" style="font-family: helvetica;">
       <span class="card-title" style="font-family: optima;">Create Competition</span>
         <div class="input-field">
@@ -38,7 +46,7 @@
     <div class="card-actions">
         <div class="row">
           <div class="col s12">
-            <input style="background-color: #343A40; border-radius: 25px;" type="submit" class="btn right" value="Create Competition">
+            <input style="background-color: #395DA0; border-radius: 25px;" type="submit" class="btn right" value="Create Competition">
           </div>
         </div>
     </div>

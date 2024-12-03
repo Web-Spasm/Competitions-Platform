@@ -8,6 +8,11 @@
 
 <style>
 
+    body {
+        background-color: white;
+
+    }
+
     .center{
         margin: 0;
         padding: 0;
@@ -128,7 +133,7 @@
 
 </style>
 
-<div style="background-color: black; border-radius: 25px;" class="center">
+<div style="background-color: #042863; border-radius: 25px;" class="center">
     <h2 style="color: white;">Sign Up</h2>
     
     <form action="{{ url_for('auth_views.signup') }}" method="post" style="font-family: helvetica;">
@@ -143,7 +148,8 @@
             <label style="color: white;" for="password">Password:</label>
         </div>
 
-        <input type="submit" class="btn black" value="Sign Up">
+        <!-- <input type="submit" class="btn black" value="Sign Up"> -->
+        <input style="background-color: #395DA0; border-radius: 25px;" type="submit" class="btn right" value="Sign Up">
     </form>
     
     <div style="color: white; margin: 25px;" class="login_link">

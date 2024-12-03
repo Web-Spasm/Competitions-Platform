@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<style>
+<!-- <style>
 
     .tables-container {
         display: flex;
@@ -48,12 +48,77 @@
     .leaderboard-table tbody tr td a:hover {
         text-decoration: underline;
     }
+</style> -->
+<style>
+    body {
+        background-color: #E6ECF5;
+        font-family: Arial, sans-serif;
+    }
+
+    .leaderboard-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .leaderboard-header {
+        text-align: center;
+        background-color: #042863;
+        color: white;
+        padding: 10px;
+        font-size: 24px;
+        font-weight: bold;
+        border-radius: 8px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #042863;
+        color: white;
+        font-family: Verdana, sans-serif;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .table th,
+    .table td {
+        padding: 12px 15px;
+        text-align: center;
+        border-bottom: 1px solid white;
+    }
+
+    .table th {
+        font-size: 16px;
+    }
+
+    .table td {
+        font-size: 14px;
+    }
+
+    .table tbody tr:hover {
+        background-color: #A2C2F2;
+        cursor: pointer;
+    }
+
+    .table a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .table a:hover {
+        text-decoration: underline;
+    }
 </style>
+
 <div class="container">
     <div class="tables-container">
         <div class="leaderboard-table">
             <center>
-                <h2 style="color: white; background-color: black; border-radius: 15px;">Leaderboard</h2>
+                <h2 style="color: white; background-color: #042863; border-radius: 15px;">Leaderboard</h2>
             </center>
             <table class="table" style="font-family: verdana;">
                 <thead>
