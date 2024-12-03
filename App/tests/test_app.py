@@ -854,27 +854,20 @@ class ModeratorIntegrationTests(unittest.TestCase):
 
     def test_update_ratings(self):
         mod = create_moderator("mod", "password")
-        comp = Competition(name="Test Competition", date=datetime.now(), location="Test Location", level=1, max_score=100)
-        team = Team(name="Test Team")
-        student = Student(username="student", password="password")
-        student.name = "Test Student"
-        student.rating_score = 0
-        student.comp_count = 0
-        team.students.append(student)
-        db.session.add(comp)
-        db.session.add(team)
-        db.session.commit()
-        comp.moderators.append(mod)
-        db.session.commit()
+        comp = create_competition(mod.username, "Test Competition", "29-03-2024", "Test Location", 1, 100)
+        student1 = create_student("student1", "password1")
+        student2 = create_student("student2", "password2")
+        student3 = create_student("student3", "password3")
 
-        # Associate the team with the competition
-        comp.teams.append(team)
-        db.session.commit()
-
-        add_results("mod", "Test Competition", "Test Team", 90)
-        result = update_ratings("mod", "Test Competition")
+        students = [student1.username, student2.username, student3.username]
+        team = add_team(mod.username, comp.name, "Test Team", students)
+        add_results(mod.username, comp.name, "Test Team", 90)
+        result = update_ratings(mod.username, comp.name)
+    
         self.assertTrue(result)
-        self.assertTrue(comp.confirm)
+        competition = get_competition_by_name(comp.name)
+        self.assertIsNotNone(competition, "Competition should not be None")
+        self.assertTrue(competition.confirm)
 
 
 class TestRatingCalculations(unittest.TestCase):
