@@ -65,7 +65,7 @@ perms
 Flask Commands
 wsgi.py is a utility script for performing various tasks related to the project. You can use it to import and test any code in the project. You just need create a manager command function, for example:
 
-# inside wsgi.py
+# Inside wsgi.py
 
 user_cli = AppGroup('user', help='User object commands')
 
