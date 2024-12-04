@@ -47,7 +47,7 @@ These values would be imported and added to the app in load_config() function in
 
 config.py
 
-# must be updated to inlude addtional secrets/ api keys & use a gitignored custom-config file instad
+# Must be updated to inlude addtional secrets/ api keys & use a gitignored custom-config file instad
 def load_config():
     config = {'ENV': os.environ.get('ENV', 'DEVELOPMENT')}
     delta = 7
