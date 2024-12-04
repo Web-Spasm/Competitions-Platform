@@ -16,7 +16,7 @@ This is a COMP3613 Software Engineering II Project designed to be an online plat
 You can access the website through this [link](https://github.com/INFO3604-Project-Team/UWI-Competitions-Platform).
 
 ## Youtube Video
-Watch our YouTube video [here](https://github.com/INFO3604-Project-Team/UWI-Competitions-Platform)
+Watch our YouTube video [here](https://www.youtube.com/watch?v=SsJVBh7qv-o)
 
 ## Features Implemented
 * Calendar: To track rank by day
