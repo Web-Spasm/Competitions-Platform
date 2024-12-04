@@ -13,7 +13,7 @@ Time to show off your rank and rating over time to your friends and colleagues. 
 This is a COMP3613 Software Engineering II Project designed to be an online platform for managing and viewing students' competitions over time while allowing moderators to create and officiate competition results. Guest without an account can view the results of competitions as well as the students/teams that took part in them. They can also view students' progress in rank by navigating from their names. Moderators can: create competitions, determine the scores earned and add teams of students to these competitions. They can also view student progress. Students can view their progress as they traverse the ranks via notification viewing, calendar tracking and graph views of their rank per update by date. This platform fulfils the needs of a competition platform for students, moderators, and onlookers. 
 
 ## Website Link
-You can access the website through this [link](https://github.com/INFO3604-Project-Team/UWI-Competitions-Platform).
+You can access the website through this [link](https://competitions-platform-1oil.onrender.com).
 
 ## Youtube Video
 Watch our YouTube video [here](https://www.youtube.com/watch?v=SsJVBh7qv-o)
